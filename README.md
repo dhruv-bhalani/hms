@@ -80,7 +80,7 @@ AuraHealth/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/aurahealth-hospital-management.git
+(http://127.0.0.1:5500/hds.html#contact)
 ```
 
 ### Open Project
