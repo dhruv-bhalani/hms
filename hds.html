@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraHealth Medical Center - Premium Connected Care</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js CDN for Analytics Dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        medical: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1', // Main Accent: Indigo-cyan modern medical vibe
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        healing: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981', // Healing Emerald
+                            600: '#059669',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.5);
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+
+        /* Glassmorphism Classes */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Animated grid patterns */
+        .grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+        }
+        .dark .grid-pattern {
+            background-image: linear-gradient(to right, rgba(99, 102, 241, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(99, 102, 241, 0.02) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-medical-500 selection:text-white transition-colors duration-300">
+
+    <div id="screenPreloader" class="fixed inset-0 z-50 bg-white dark:bg-slate-950 flex flex-col items-center justify-center transition-all duration-700">
+        <div class="relative flex items-center justify-center">
+            <div class="absolute w-20 h-20 border-4 border-medical-500/20 border-t-medical-500 rounded-full animate-spin"></div>
+            <i data-lucide="heart-pulse" class="w-10 h-10 text-medical-500 animate-pulse"></i>
+        </div>
+        <h2 class="mt-6 text-xl font-bold bg-gradient-to-r from-medical-500 to-indigo-500 bg-clip-text text-transparent">AuraHealth Center</h2>
+        <p class="text-xs text-slate-400 mt-2">Connecting Compassion with Tech Excellence...</p>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-sm pointer-events-none"></div>
+
+    <!-- SCROLL TO TOP -->
+    <button id="scrollToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hidden fixed bottom-6 left-6 z-40 p-3 bg-medical-500 hover:bg-medical-600 text-white rounded-full shadow-lg hover:scale-110 active:scale-95 transition-all">
+        <i data-lucide="chevron-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- MAIN PLATFORM WRAPPER -->
+    <div class="min-h-screen flex flex-col justify-between">
+
+        <!-- ==================== PUBLIC SITE VIEW ==================== -->
+        <div id="publicSiteView" class="block">
+            
+            <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-900">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center h-20">
+                        
+                        <!-- Logo -->
+                        <a href="#home" class="flex items-center gap-3">
+                            <div class="bg-gradient-to-tr from-medical-500 to-indigo-600 text-white p-2.5 rounded-2xl shadow-md shadow-medical-500/20">
+                                <i data-lucide="heart-pulse" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <span class="text-lg font-black tracking-tight text-slate-900 dark:text-white block leading-none">AuraHealth</span>
+                                <span class="text-[10px] font-semibold text-medical-500 tracking-wider uppercase">Connected Care</span>
+                            </div>
+                        </a>
+
+                        <!-- Desktop Navigation Menu Links -->
+                        <nav class="hidden xl:flex items-center gap-6 text-sm font-semibold text-slate-600 dark:text-slate-300">
+                            <a href="#home" class="hover:text-medical-500 transition-colors">Home</a>
+                            <a href="#about" class="hover:text-medical-500 transition-colors">About</a>
+                            <a href="#services" class="hover:text-medical-500 transition-colors">Services</a>
+                            <a href="#doctors" class="hover:text-medical-500 transition-colors">Doctors</a>
+                            <a href="#departments" class="hover:text-medical-500 transition-colors">Departments</a>
+                            <a href="#patient-portal-promo" class="hover:text-medical-500 transition-colors">Patient Portal</a>
+                            <a href="#gallery" class="hover:text-medical-500 transition-colors">Gallery</a>
+                            <a href="#faq" class="hover:text-medical-500 transition-colors">FAQ</a>
+                            <a href="#contact" class="hover:text-medical-500 transition-colors">Contact</a>
+                        </nav>
+
+                        <!-- Actions Controls -->
+                        <div class="flex items-center gap-3">
+                            <!-- Dark Mode Switcher -->
+                            <button onclick="toggleDarkMode()" class="p-2.5 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-xl transition-all" title="Toggle Theme">
+                                <i id="themeIcon" data-lucide="moon" class="w-5 h-5 text-slate-600 dark:text-slate-300"></i>
+                            </button>
+
+                            <!-- Portal System Redirection Link -->
+                            <button onclick="switchToPortal('admin')" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
+                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Admin Portal
+                            </button>
+
+                            <button onclick="switchToPortal('patient')" class="bg-gradient-to-r from-medical-500 to-indigo-600 hover:from-medical-600 hover:to-indigo-700 text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md shadow-medical-500/20 hover:scale-[1.02]">
+                                Patient Login
+                            </button>
+
+                            <!-- Mobile Menu Hamburger Trigger -->
+                            <button onclick="toggleMobileMenu()" class="xl:hidden p-2.5 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-xl transition-all">
+                                <i data-lucide="menu" class="w-6 h-6"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="mobileMenu" class="hidden xl:hidden border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950 p-6 space-y-4 shadow-xl">
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="#home" onclick="toggleMobileMenu()" class="flex items-center gap-2 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold text-slate-700 dark:text-slate-300">Home</a>
+                        <a href="#about" onclick="toggleMobileMenu()" class="flex items-center gap-2 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold text-slate-700 dark:text-slate-300">About</a>
+                        <a href="#services" onclick="toggleMobileMenu()" class="flex items-center gap-2 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold text-slate-700 dark:text-slate-300">Services</a>
+                        <a href="#doctors" onclick="toggleMobileMenu()" class="flex items-center gap-2 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold text-slate-700 dark:text-slate-300">Doctors</a>
+                        <a href="#departments" onclick="toggleMobileMenu()" class="flex items-center gap-2 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold text-slate-700 dark:text-slate-300">Departments</a>
+                        <a href="#patient-portal-promo" onclick="toggleMobileMenu()" class="flex items-center gap-2 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold text-slate-700 dark:text-slate-300">Patient Portal</a>
+                        <a href="#gallery" onclick="toggleMobileMenu()" class="flex items-center gap-2 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold text-slate-700 dark:text-slate-300">Gallery</a>
+                        <a href="#contact" onclick="toggleMobileMenu()" class="flex items-center gap-2 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold text-slate-700 dark:text-slate-300">Contact</a>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 dark:border-slate-900 flex flex-col gap-2">
+                        <button onclick="switchToPortal('admin'); toggleMobileMenu()" class="w-full py-2.5 bg-slate-900 dark:bg-slate-800 text-white text-xs font-bold rounded-xl">Admin Dashboard</button>
+                    </div>
+                </div>
+            </header>
+
+            <section id="home" class="relative overflow-hidden grid-pattern py-16 sm:py-24 lg:py-32">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        
+                        <!-- Left text copy -->
+                        <div class="space-y-6">
+                            <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-medical-50 dark:bg-medical-900/30 border border-medical-100 dark:border-medical-800/50 text-medical-600 dark:text-medical-400">
+                                <span class="w-2 h-2 rounded-full bg-healing-500 animate-pulse"></span> AuraHealth Connected Hospital
+                            </span>
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                                Advanced Medicine, <br>
+                                <span class="bg-gradient-to-r from-medical-500 to-indigo-600 bg-clip-text text-transparent">Compassionate Care.</span>
+                            </h1>
+                            <p class="text-slate-500 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl">
+                                Welcome to AuraHealth Medical Center, where advanced clinical technologies converge with dedicated medical specialists. We deliver premium health solutions tailored around your physical wellbeing and mental comfort.
+                            </p>
+                            <div class="flex flex-wrap gap-4 pt-2">
+                                <a href="#appointment-booking" class="bg-gradient-to-r from-medical-500 to-indigo-600 hover:from-medical-600 hover:to-indigo-700 text-white px-8 py-3.5 rounded-xl font-extrabold text-sm sm:text-base transition-all shadow-lg shadow-medical-500/20 hover:scale-[1.02] flex items-center gap-2">
+                                    <i data-lucide="calendar-plus" class="w-5 h-5"></i> Book Appointment
+                                </a>
+                                <a href="#emergency" class="bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 dark:hover:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 px-8 py-3.5 rounded-xl font-extrabold text-sm sm:text-base transition-all flex items-center gap-2">
+                                    <i data-lucide="phone-call" class="w-5 h-5 animate-bounce"></i> Emergency Call 24/7
+                                </a>
+                            </div>
+                            <div class="grid grid-cols-3 gap-6 pt-6 border-t border-slate-200/60 dark:border-slate-800">
+                                <div>
+                                    <span class="block text-2xl font-black text-slate-900 dark:text-white">99.8%</span>
+                                    <span class="text-xs text-slate-400 font-medium">Patient Satisfaction</span>
+                                </div>
+                                <div>
+                                    <span class="block text-2xl font-black text-slate-900 dark:text-white">15+ mins</span>
+                                    <span class="text-xs text-slate-400 font-medium">Avg Triage Speed</span>
+                                </div>
+                                <div>
+                                    <span class="block text-2xl font-black text-slate-900 dark:text-white">ISO Cert</span>
+                                    <span class="text-xs text-slate-400 font-medium">Clinical Excellence</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right visual placeholder image -->
+                        <div class="relative flex justify-center items-center">
+                            <!-- Floating decoration effects -->
+                            <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-medical-500/10 rounded-full filter blur-3xl opacity-60"></div>
+                            <div class="absolute -left-10 -top-10 w-72 h-72 bg-indigo-500/10 rounded-full filter blur-3xl opacity-60"></div>
+                            
+                            <!-- Custom SVG Mockup for Hospital Exterior & Healthcare Center -->
+                            <div class="w-full max-w-md relative glass p-6 rounded-3xl border border-slate-200/50 dark:border-slate-800 shadow-2xl overflow-hidden group">
+                                <svg viewBox="0 0 400 350" class="w-full h-auto drop-shadow-lg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Sky background -->
+                                    <rect width="400" height="350" rx="20" fill="#f8fafc" class="dark:fill-slate-900" />
+                                    <!-- Sun rays -->
+                                    <circle cx="350" cy="50" r="30" fill="#fef08a" opacity="0.3" class="animate-pulse" />
+                                    <!-- Hospital Base Building -->
+                                    <rect x="50" y="100" width="300" height="210" rx="12" fill="#e2e8f0" class="dark:fill-slate-800" />
+                                    <!-- Front Glass Atrium -->
+                                    <rect x="150" y="130" width="100" height="180" rx="4" fill="#6366f1" opacity="0.2" />
+                                    <!-- Grid lines for windows -->
+                                    <rect x="80" y="130" width="30" height="40" rx="4" fill="#cbd5e1" class="dark:fill-slate-700" />
+                                    <rect x="120" y="130" width="30" height="40" rx="4" fill="#cbd5e1" class="dark:fill-slate-700" />
+                                    <rect x="250" y="130" width="30" height="40" rx="4" fill="#cbd5e1" class="dark:fill-slate-700" />
+                                    <rect x="290" y="130" width="30" height="40" rx="4" fill="#cbd5e1" class="dark:fill-slate-700" />
+                                    <rect x="80" y="190" width="30" height="40" rx="4" fill="#cbd5e1" class="dark:fill-slate-700" />
+                                    <rect x="120" y="190" width="30" height="40" rx="4" fill="#cbd5e1" class="dark:fill-slate-700" />
+                                    <rect x="250" y="190" width="30" height="40" rx="4" fill="#cbd5e1" class="dark:fill-slate-700" />
+                                    <rect x="290" y="190" width="30" height="40" rx="4" fill="#cbd5e1" class="dark:fill-slate-700" />
+                                    <!-- Red Cross Logo Badge -->
+                                    <rect x="180" y="70" width="40" height="40" rx="8" fill="#ef4444" />
+                                    <rect x="196" y="78" width="8" height="24" rx="2" fill="white" />
+                                    <rect x="188" y="86" width="24" height="8" rx="2" fill="white" />
+                                    <!-- Ambulance graphic sitting at front gate -->
+                                    <g class="translate-x-12">
+                                        <rect x="50" y="270" width="60" height="40" rx="6" fill="white" />
+                                        <rect x="100" y="280" width="15" height="20" rx="4" fill="#3b82f6" />
+                                        <circle cx="65" cy="310" r="8" fill="#1e293b" />
+                                        <circle cx="100" cy="310" r="8" fill="#1e293b" />
+                                        <rect x="55" y="275" width="20" height="6" fill="#ef4444" />
+                                    </g>
+                                </svg>
+                                <!-- Interactive overlay overlay info -->
+                                <div class="absolute bottom-6 left-6 right-6 p-4 bg-white/95 dark:bg-slate-950/95 border border-slate-100 dark:border-slate-800 rounded-2xl flex items-center gap-3 shadow-md hover:scale-[1.03] transition-all">
+                                    <div class="p-2 bg-healing-500 text-white rounded-lg"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <span class="block text-xs font-black text-slate-900 dark:text-white">Clinical Safe Protocols</span>
+                                        <span class="text-[10px] text-slate-400">100% Fully sanitized sterile theatres</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="py-20 bg-white dark:bg-slate-950 border-y border-slate-100 dark:border-slate-900">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        
+                        <!-- Left column narrative block -->
+                        <div class="space-y-6">
+                            <span class="text-xs font-black uppercase text-medical-500 tracking-wider">About AuraHealth Center</span>
+                            <h2 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+                                Over 25 Years of Medical Trust, Healthcare Quality & Safety
+                            </h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+                                Formed in 2001, AuraHealth Medical Center has evolved into a leading quaternary hospital group. We utilize high-resolution imaging scanners, ultra-modern robotic-assisted surgical systems, and state-of-the-art diagnostic medical laboratories to offer precise therapeutics.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="mt-1 p-1 bg-medical-50 dark:bg-medical-950/50 text-medical-500 rounded-md"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                    <p class="text-slate-600 dark:text-slate-300 text-sm"><strong class="text-slate-900 dark:text-white">Expert Specialists:</strong> Board-certified specialist clinicians with fellowships from top world universities.</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="mt-1 p-1 bg-medical-50 dark:bg-medical-950/50 text-medical-500 rounded-md"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                    <p class="text-slate-600 dark:text-slate-300 text-sm"><strong class="text-slate-900 dark:text-white">Emergency Dispatch:</strong> Fully coordinated ambulance fleet featuring real-time telemetry systems.</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="mt-1 p-1 bg-medical-50 dark:bg-medical-950/50 text-medical-500 rounded-md"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                    <p class="text-slate-600 dark:text-slate-300 text-sm"><strong class="text-slate-900 dark:text-white">Affordable Billing:</strong> Direct co-pay matching with international medical insurance carriers.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column Interactive Statistics Grid counters -->
+                        <div class="grid grid-cols-2 gap-4 sm:gap-6">
+                            
+                            <div class="p-6 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl flex flex-col justify-center items-center text-center shadow-sm">
+                                <div class="p-3 bg-medical-50 dark:bg-medical-900/30 text-medical-500 rounded-xl mb-3">
+                                    <i data-lucide="user-cog" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-3xl font-black text-slate-950 dark:text-white block" id="stat-doctors">120+</span>
+                                <span class="text-xs text-slate-400 mt-1 font-semibold uppercase tracking-wider">Expert Doctors</span>
+                            </div>
+
+                            <div class="p-6 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl flex flex-col justify-center items-center text-center shadow-sm">
+                                <div class="p-3 bg-healing-50 dark:bg-healing-900/30 text-healing-500 rounded-xl mb-3">
+                                    <i data-lucide="users" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-3xl font-black text-slate-950 dark:text-white block" id="stat-nurses">350+</span>
+                                <span class="text-xs text-slate-400 mt-1 font-semibold uppercase tracking-wider">Support Nurses</span>
+                            </div>
+
+                            <div class="p-6 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl flex flex-col justify-center items-center text-center shadow-sm">
+                                <div class="p-3 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-500 rounded-xl mb-3">
+                                    <i data-lucide="bed" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-3xl font-black text-slate-950 dark:text-white block" id="stat-beds">500+</span>
+                                <span class="text-xs text-slate-400 mt-1 font-semibold uppercase tracking-wider">Inpatient Beds</span>
+                            </div>
+
+                            <div class="p-6 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl flex flex-col justify-center items-center text-center shadow-sm">
+                                <div class="p-3 bg-rose-50 dark:bg-rose-900/30 text-rose-500 rounded-xl mb-3">
+                                    <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-3xl font-black text-slate-950 dark:text-white block" id="stat-years">25+</span>
+                                <span class="text-xs text-slate-400 mt-1 font-semibold uppercase tracking-wider">Years Experience</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="services" class="py-20 bg-slate-50/50 dark:bg-slate-900/30">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                        <span class="text-xs font-black uppercase text-medical-500 tracking-wider">Comprehensive Hospital Services</span>
+                        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 dark:text-white">Our Clinical Departments</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">We provide full range patient-centric general diagnostics, rehabilitation therapy, specialized surgery programs and continuous recovery checks.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        
+                        <!-- Emergency Care -->
+                        <div class="glass p-6 rounded-2xl hover:-translate-y-2 hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="p-3 bg-rose-50 dark:bg-rose-950/40 text-rose-500 rounded-xl w-fit"><i data-lucide="shield-alert" class="w-6 h-6"></i></div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Emergency Care</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">24/7 immediate trauma and acute life-saving triage services with direct ambulance fleet coordination.</p>
+                            </div>
+                            <a href="#emergency" class="text-xs font-extrabold text-medical-500 mt-4 inline-flex items-center gap-1 hover:underline">Emergency Info <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+
+                        <!-- Cardiology -->
+                        <div class="glass p-6 rounded-2xl hover:-translate-y-2 hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="p-3 bg-red-50 dark:bg-red-950/40 text-red-500 rounded-xl w-fit"><i data-lucide="heart" class="w-6 h-6"></i></div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Cardiology</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Advanced coronary angiography, angioplasty, pacemaker monitoring, and complex heart valve surgery.</p>
+                            </div>
+                            <a href="#appointment-booking" class="text-xs font-extrabold text-medical-500 mt-4 inline-flex items-center gap-1 hover:underline">Book Care <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+
+                        <!-- Neurology -->
+                        <div class="glass p-6 rounded-2xl hover:-translate-y-2 hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="p-3 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 rounded-xl w-fit"><i data-lucide="brain" class="w-6 h-6"></i></div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Neurology</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Pioneering stroke management, epilepsy treatments, neuromuscular diagnostics, and complex neurosurgery.</p>
+                            </div>
+                            <a href="#appointment-booking" class="text-xs font-extrabold text-medical-500 mt-4 inline-flex items-center gap-1 hover:underline">Book Care <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+
+                        <!-- Orthopedics -->
+                        <div class="glass p-6 rounded-2xl hover:-translate-y-2 hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="p-3 bg-amber-50 dark:bg-amber-950/40 text-amber-500 rounded-xl w-fit"><i data-lucide="accessibility" class="w-6 h-6"></i></div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Orthopedics</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Total hip/knee arthroplasty, microscopic sports injury repair, and musculoskeletal trauma management.</p>
+                            </div>
+                            <a href="#appointment-booking" class="text-xs font-extrabold text-medical-500 mt-4 inline-flex items-center gap-1 hover:underline">Book Care <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+
+                        <!-- Pediatrics -->
+                        <div class="glass p-6 rounded-2xl hover:-translate-y-2 hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="p-3 bg-healing-50 dark:bg-healing-950/40 text-healing-500 rounded-xl w-fit"><i data-lucide="baby" class="w-6 h-6"></i></div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Pediatrics</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Comprehensive neonatology care, pediatric immunization schemes, and specialized childhood medicine.</p>
+                            </div>
+                            <a href="#appointment-booking" class="text-xs font-extrabold text-medical-500 mt-4 inline-flex items-center gap-1 hover:underline">Book Care <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+
+                        <!-- Pharmacy -->
+                        <div class="glass p-6 rounded-2xl hover:-translate-y-2 hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="p-3 bg-blue-50 dark:bg-blue-950/40 text-blue-500 rounded-xl w-fit"><i data-lucide="pill" class="w-6 h-6"></i></div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">In-house Pharmacy</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Fully stocked critical care pharmaceuticals, computerized prescription validation, and home delivery.</p>
+                            </div>
+                            <a href="#appointment-booking" class="text-xs font-extrabold text-medical-500 mt-4 inline-flex items-center gap-1 hover:underline">Book Care <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+
+                        <!-- Laboratory -->
+                        <div class="glass p-6 rounded-2xl hover:-translate-y-2 hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="p-3 bg-purple-50 dark:bg-purple-950/40 text-purple-500 rounded-xl w-fit"><i data-lucide="test-tube-2" class="w-6 h-6"></i></div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Lab Diagnostics</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Molecular pathology, hematology, tumor panels, and clinical biochemistry testing with digital outputs.</p>
+                            </div>
+                            <a href="#appointment-booking" class="text-xs font-extrabold text-medical-500 mt-4 inline-flex items-center gap-1 hover:underline">Book Care <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+
+                        <!-- ICU -->
+                        <div class="glass p-6 rounded-2xl hover:-translate-y-2 hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="p-3 bg-cyan-50 dark:bg-cyan-950/40 text-cyan-500 rounded-xl w-fit"><i data-lucide="activity" class="w-6 h-6"></i></div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Critical Care (ICU)</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">High-dependency intensive care recovery units with absolute round-the-clock specialized support systems.</p>
+                            </div>
+                            <a href="#appointment-booking" class="text-xs font-extrabold text-medical-500 mt-4 inline-flex items-center gap-1 hover:underline">Book Care <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="doctors" class="py-20 bg-white dark:bg-slate-950">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <span class="text-xs font-black uppercase text-medical-500 tracking-wider">Meet Our Specialists</span>
+                            <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 dark:text-white mt-1">Our Board-Certified Physicians</h2>
+                        </div>
+                        <!-- Filtering Specialty Buttons -->
+                        <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                            <button onclick="filterDoctorsBySpecialty('All')" class="doctor-filter-btn px-4 py-2 text-xs font-semibold rounded-xl bg-medical-500 text-white shadow-md shadow-medical-500/10 whitespace-nowrap">All Doctors</button>
+                            <button onclick="filterDoctorsBySpecialty('Cardiology')" class="doctor-filter-btn px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 whitespace-nowrap">Cardiology</button>
+                            <button onclick="filterDoctorsBySpecialty('Neurology')" class="doctor-filter-btn px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 whitespace-nowrap">Neurology</button>
+                            <button onclick="filterDoctorsBySpecialty('Orthopedics')" class="doctor-filter-btn px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 whitespace-nowrap">Orthopedics</button>
+                        </div>
+                    </div>
+
+                    <!-- Doctors Display Grid -->
+                    <div id="doctorsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Rendered via JS -->
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="departments" class="py-20 bg-slate-50/50 dark:bg-slate-900/40 border-y border-slate-100 dark:border-slate-900">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                        <span class="text-xs font-black uppercase text-medical-500 tracking-wider">Clinical Environments</span>
+                        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 dark:text-white">Our Departments Architecture</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">We maintain specialized functional medical departments mapped out inside our main tower building blocks to expedite patient triage routing.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        
+                        <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-4">
+                            <div class="p-3 bg-medical-50 dark:bg-medical-950/50 text-medical-500 rounded-2xl h-fit shrink-0"><i data-lucide="building" class="w-6 h-6"></i></div>
+                            <div class="space-y-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">West Wing Tower</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Houses Outpatient consult suites, general radiology laboratories, pediatric clinics, and emergency triages.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-4">
+                            <div class="p-3 bg-healing-50 dark:bg-healing-950/50 text-healing-500 rounded-2xl h-fit shrink-0"><i data-lucide="hospital" class="w-6 h-6"></i></div>
+                            <div class="space-y-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">East Wing Tower</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Dedicated to inpatient medical suites, intensive care chambers (ICU), and cardiac surgery theaters.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-4">
+                            <div class="p-3 bg-rose-50 dark:bg-rose-950/50 text-rose-500 rounded-2xl h-fit shrink-0"><i data-lucide="flask" class="w-6 h-6"></i></div>
+                            <div class="space-y-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Diagnostics Pavillion</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Includes clinical molecular pathology laboratories, MRI imaging scanning zones, and pharmaceutical store dispensaries.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="patient-portal-promo" class="py-20 bg-white dark:bg-slate-950">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="bg-gradient-to-br from-medical-900 via-indigo-950 to-slate-950 text-white rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-2xl border border-indigo-900/40">
+                        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+                            <div class="space-y-6">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 border border-indigo-500/30 text-indigo-300">
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5 animate-pulse"></i> AuraHealth Connect Patient System
+                                </span>
+                                <h2 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+                                    Manage Your Hospital Journey Fully Online & Securely
+                                </h2>
+                                <p class="text-indigo-200 text-sm sm:text-base leading-relaxed">
+                                    Access clinical electronic health results instantly. Our safe portal grants view clearance to certified clinical lab reports, digital physician drug prescriptions, active invoices, medical histories, and online payment methods.
+                                </p>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="shield-check" class="w-5 h-5 text-healing-500"></i>
+                                        <span class="text-xs sm:text-sm font-semibold">HIPAA & GDPR Compliant</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="clock" class="w-5 h-5 text-healing-500"></i>
+                                        <span class="text-xs sm:text-sm font-semibold">Instant Telehealth Sync</span>
+                                    </div>
+                                </div>
+                                <div class="pt-2 flex flex-wrap gap-4">
+                                    <button onclick="switchToPortal('patient')" class="bg-white hover:bg-slate-100 text-slate-950 font-black px-6 py-3 rounded-xl text-sm transition-all shadow-md flex items-center gap-2">
+                                        Launch Patient Portal <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Dashboard Preview Screen Simulator Mock -->
+                            <div class="relative flex justify-center">
+                                <div class="w-full max-w-md bg-slate-900/90 border border-indigo-500/30 rounded-2xl p-4 shadow-2xl relative">
+                                    <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                        </div>
+                                        <span class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">E-Health Portal Simulator</span>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="p-3 bg-slate-800/60 rounded-xl flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <i data-lucide="file-text" class="w-5 h-5 text-indigo-400"></i>
+                                                <div>
+                                                    <span class="block text-xs font-bold text-white">Full Blood Count Report</span>
+                                                    <span class="text-[10px] text-slate-400">Released 1 hr ago by Lab Dept</span>
+                                                </div>
+                                            </div>
+                                            <span class="text-[10px] font-bold text-healing-500 bg-healing-500/10 px-2 py-0.5 rounded-md">Cleared</span>
+                                        </div>
+                                        <div class="p-3 bg-slate-800/60 rounded-xl flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <i data-lucide="pill" class="w-5 h-5 text-indigo-400"></i>
+                                                <div>
+                                                    <span class="block text-xs font-bold text-white">Amoxicillin 500mg</span>
+                                                    <span class="text-[10px] text-slate-400">Daily capsule prescription</span>
+                                                </div>
+                                            </div>
+                                            <span class="text-[10px] font-bold text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md">Active</span>
+                                        </div>
+                                        <div class="p-3 bg-slate-800/60 rounded-xl flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <i data-lucide="credit-card" class="w-5 h-5 text-indigo-400"></i>
+                                                <div>
+                                                    <span class="block text-xs font-bold text-white">Consolidated Invoice #9048</span>
+                                                    <span class="text-[10px] text-slate-400">Consultation co-pay fee</span>
+                                                </div>
+                                            </div>
+                                            <span class="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-md">Pending</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="appointment-booking" class="py-20 bg-slate-50/50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-900">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-8 sm:p-12 shadow-xl">
+                        
+                        <div class="text-center max-w-xl mx-auto mb-10 space-y-2">
+                            <span class="text-xs font-black uppercase text-medical-500 tracking-wider">Appointment Desk</span>
+                            <h2 class="text-3xl font-black text-slate-950 dark:text-white">Book Your Clinical Appointment</h2>
+                            <p class="text-slate-400 text-xs">Fill details inside fields to lock instant consultation slot. Confirmed details instantly load in clinical reception registers.</p>
+                        </div>
+
+                        <form id="publicAppointmentForm" onsubmit="handleAppointmentSubmit(event)" class="space-y-6">
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Patient Display Name</label>
+                                    <div class="relative">
+                                        <i data-lucide="user" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                                        <input type="text" id="aptName" required placeholder="Jane Doe" class="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm">
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Email Address</label>
+                                    <div class="relative">
+                                        <i data-lucide="mail" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                                        <input type="email" id="aptEmail" required placeholder="jane@doe.com" class="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Contact Phone Number</label>
+                                    <div class="relative">
+                                        <i data-lucide="phone" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                                        <input type="tel" id="aptPhone" required placeholder="+1 (555) 019-2834" class="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm">
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Department / Specialty</label>
+                                    <select id="aptDepartment" onchange="populateDoctorSelector(this.value)" class="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm bg-white dark:text-white">
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Neurology">Neurology</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                                <div class="space-y-2 sm:col-span-1">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Select Specialist</label>
+                                    <select id="aptDoctor" class="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm bg-white dark:text-white">
+                                        <!-- Populated dynamically based on department selection -->
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase font-sans">Date of Visit</label>
+                                    <input type="date" id="aptDate" required class="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm bg-white dark:text-white">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase font-sans">Preferred Time Slot</label>
+                                    <select id="aptTime" class="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm bg-white dark:text-white">
+                                        <option value="09:00 AM">09:00 AM</option>
+                                        <option value="11:00 AM">11:00 AM</option>
+                                        <option value="01:00 PM">01:00 PM</option>
+                                        <option value="03:00 PM">03:00 PM</option>
+                                        <option value="05:00 PM">05:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-400 uppercase">Consultation Objectives / Message</label>
+                                <textarea id="aptMessage" rows="3" placeholder="Provide basic description regarding symptoms or rehabilitation background..." class="w-full p-4 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 bg-gradient-to-r from-medical-500 to-indigo-600 hover:from-medical-600 hover:to-indigo-700 text-white font-extrabold rounded-xl transition-all shadow-lg shadow-medical-500/20 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 text-sm sm:text-base">
+                                <i data-lucide="check" class="w-5 h-5"></i> Confirm Secure Booking Request
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="gallery" class="py-20 bg-white dark:bg-slate-950">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                        <span class="text-xs font-black uppercase text-medical-500 tracking-wider">Hospital Gallery</span>
+                        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 dark:text-white">Modern Hospital Interior & Equipment</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">Tour our premium facility, which features top-grade medical equipment, professional clinical zones, and sterile spaces.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Gallery Block 1: Operating Suite -->
+                        <div class="group overflow-hidden rounded-3xl border border-slate-150 dark:border-slate-800 shadow-sm relative bg-slate-50 dark:bg-slate-900">
+                            <div class="p-6 flex flex-col justify-between h-72">
+                                <div class="bg-indigo-500 text-white p-3 rounded-2xl w-fit"><i data-lucide="heart-pulse" class="w-6 h-6 animate-pulse"></i></div>
+                                <div>
+                                    <h4 class="font-extrabold text-slate-900 dark:text-white text-lg">Intelligent Operating Suites</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">High-end surgical cleanrooms designed for laminar airflow protocols.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gallery Block 2: MRI scanner -->
+                        <div class="group overflow-hidden rounded-3xl border border-slate-150 dark:border-slate-800 shadow-sm relative bg-slate-50 dark:bg-slate-900">
+                            <div class="p-6 flex flex-col justify-between h-72">
+                                <div class="bg-healing-500 text-white p-3 rounded-2xl w-fit"><i data-lucide="scan-line" class="w-6 h-6"></i></div>
+                                <div>
+                                    <h4 class="font-extrabold text-slate-900 dark:text-white text-lg">Radiology & MRI Pavilion</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">3-Tesla high resolution scanning fields mapping neurological channels.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gallery Block 3: Patient Care Chamber -->
+                        <div class="group overflow-hidden rounded-3xl border border-slate-150 dark:border-slate-800 shadow-sm relative bg-slate-50 dark:bg-slate-900">
+                            <div class="p-6 flex flex-col justify-between h-72">
+                                <div class="bg-amber-500 text-white p-3 rounded-2xl w-fit"><i data-lucide="bed" class="w-6 h-6"></i></div>
+                                <div>
+                                    <h4 class="font-extrabold text-slate-900 dark:text-white text-lg">Premium Inpatient Suites</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Luxurious convalescent suites offering round-the-clock physical telemetry.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="testimonials" class="py-20 bg-slate-50/50 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-900">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                        <span class="text-xs font-black uppercase text-medical-500 tracking-wider">Patient Testimonials</span>
+                        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 dark:text-white">Recovered Patients Stories</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">Read actual reviews from individuals who recovered their health through AuraHealth specialists.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        
+                        <div class="glass p-8 rounded-3xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between shadow-sm">
+                            <div class="space-y-4">
+                                <div class="flex text-amber-400"><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i></div>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed italic">"My bypass surgery at AuraHealth was stellar. The surgeon was deeply supportive, explaining every clinical risk, and the ICU nurses treated me like family. Absolute clinical kings!"</p>
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center font-black text-sm">MC</div>
+                                <div>
+                                    <span class="block text-xs font-bold text-slate-900 dark:text-white">Marcus Sterling</span>
+                                    <span class="text-[10px] text-slate-400">Cardiology Patient</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass p-8 rounded-3xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between shadow-sm">
+                            <div class="space-y-4">
+                                <div class="flex text-amber-400"><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i></div>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed italic">"The patient portal was ridiculously smooth. I logged on, viewed my blood and lipid laboratory panels in minutes, and paid my co-pay fee securely. Truly frictionless healthcare."</p>
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center font-black text-sm">CV</div>
+                                <div>
+                                    <span class="block text-xs font-bold text-slate-900 dark:text-white">Chloe Vance</span>
+                                    <span class="text-[10px] text-slate-400">Neurology Consult</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass p-8 rounded-3xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between shadow-sm">
+                            <div class="space-y-4">
+                                <div class="flex text-amber-400"><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i></div>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed italic">"The orthopedic surgical repair of my knee ligament went perfectly. I am back to sprinting thanks to their excellent physical therapists. Highly recommended for physical repair."</p>
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center font-black text-sm">RZ</div>
+                                <div>
+                                    <span class="block text-xs font-bold text-slate-900 dark:text-white">Rachel Zane</span>
+                                    <span class="text-[10px] text-slate-400">Orthopedic Rehab</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="emergency" class="py-16 bg-gradient-to-tr from-rose-900 to-red-950 text-white border-y border-red-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                        <div class="space-y-3">
+                            <span class="inline-flex items-center gap-1 px-3 py-1 bg-rose-500/20 rounded-full text-xs font-black border border-rose-500/30 text-rose-300">
+                                <i data-lucide="alert-circle" class="w-3 h-3 animate-pulse"></i> 24x7 Critical Emergency dispatch
+                            </span>
+                            <h2 class="text-3xl font-black tracking-tight leading-tight">Need Urgent Emergency Care?</h2>
+                            <p class="text-rose-200 text-sm max-w-xl">Contact our clinical dispatch command center directly. Our mobile trauma paramedics deploy immediately within a 20-mile radius.</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 shrink-0">
+                            <a href="tel:18005550199" class="p-6 bg-slate-950/40 hover:bg-slate-950/60 border border-rose-500/30 rounded-2xl flex items-center gap-4 transition-all hover:scale-[1.02]">
+                                <div class="p-3 bg-rose-500 text-white rounded-xl"><i data-lucide="phone-call" class="w-6 h-6 animate-pulse"></i></div>
+                                <div>
+                                    <span class="block text-xs text-rose-300 uppercase tracking-widest font-bold">Ambulance Hotline</span>
+                                    <span class="text-xl font-black text-white">+1 (800) 555-0199</span>
+                                </div>
+                            </a>
+                            <div class="p-6 bg-slate-950/40 border border-rose-500/30 rounded-2xl flex items-center gap-4">
+                                <div class="p-3 bg-healing-500 text-white rounded-xl"><i data-lucide="clock" class="w-6 h-6"></i></div>
+                                <div>
+                                    <span class="block text-xs text-rose-300 uppercase tracking-widest font-bold">Triage Availability</span>
+                                    <span class="text-lg font-black text-white">Always Open (24x7)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="faq" class="py-20 bg-white dark:bg-slate-950">
+                <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                        <span class="text-xs font-black uppercase text-medical-500 tracking-wider">Frequently Asked Questions</span>
+                        <h2 class="text-3xl font-black text-slate-950 dark:text-white">Have Questions? We Have Answers</h2>
+                    </div>
+
+                    <!-- FAQ Accordions -->
+                    <div class="space-y-4">
+                        
+                        <div class="border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-900 transition-colors">
+                            <button onclick="toggleFaqAccordion(1)" class="w-full flex items-center justify-between p-6 text-left focus:outline-none">
+                                <span class="font-extrabold text-slate-800 dark:text-white text-sm sm:text-base">How do I access the digital Patient Portal medical records?</span>
+                                <i data-lucide="plus" id="faq-icon-1" class="w-5 h-5 text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div id="faq-ans-1" class="hidden p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800">
+                                Patients can access the secure portal directly using their credentials by clicking "Patient Login" in the top header. There you can securely view medical records, lab panels, active prescriptions, and invoice statements.
+                            </div>
+                        </div>
+
+                        <div class="border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-900 transition-colors">
+                            <button onclick="toggleFaqAccordion(2)" class="w-full flex items-center justify-between p-6 text-left focus:outline-none">
+                                <span class="font-extrabold text-slate-800 dark:text-white text-sm sm:text-base">What insurances does AuraHealth accept for surgical care?</span>
+                                <i data-lucide="plus" id="faq-icon-2" class="w-5 h-5 text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div id="faq-ans-2" class="hidden p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800">
+                                We partner directly with all major insurance carriers, including BlueCross, Aetna, Cigna, UnitedHealthcare, and several global travel policies. Co-pays can easily be dispatched online using credit/debit profiles inside the portal.
+                            </div>
+                        </div>
+
+                        <div class="border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-900 transition-colors">
+                            <button onclick="toggleFaqAccordion(3)" class="w-full flex items-center justify-between p-6 text-left focus:outline-none">
+                                <span class="font-extrabold text-slate-800 dark:text-white text-sm sm:text-base">Can I schedule a diagnostic MRI or Lab Test without an appointment?</span>
+                                <i data-lucide="plus" id="faq-icon-3" class="w-5 h-5 text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div id="faq-ans-3" class="hidden p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800">
+                                Yes, lab panels can be requested with physician referrals. Walk-in diagnostic support is accommodated in our Pavillion during hours, but locking online bookings guarantees faster triage speeds.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="py-20 bg-slate-50/50 dark:bg-slate-900/30 border-t border-slate-100 dark:border-slate-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                        
+                        <!-- Left form column -->
+                        <div class="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black text-slate-950 dark:text-white">Send Us a message</h3>
+                                <p class="text-xs text-slate-400">Our customer support office replies back in 24 hours.</p>
+                            </div>
+
+                            <form id="publicContactForm" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="space-y-1">
+                                        <label class="text-xs font-bold text-slate-400 uppercase">First Name</label>
+                                        <input type="text" required placeholder="Alex" class="w-full px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm">
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="text-xs font-bold text-slate-400 uppercase">Last Name</label>
+                                        <input type="text" required placeholder="River" class="w-full px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm">
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Email Address</label>
+                                    <input type="email" required placeholder="alex@river.com" class="w-full px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Message Content</label>
+                                    <textarea rows="4" required placeholder="Write details about your query..." class="w-full p-4 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-medical-500 dark:bg-slate-950 text-sm resize-none"></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-3 bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-extrabold rounded-xl transition-all shadow-md text-sm flex items-center justify-center gap-2">
+                                    <i data-lucide="navigation" class="w-4 h-4"></i> Dispatch Message
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Right direct contact info & Map -->
+                        <div class="flex flex-col justify-between gap-8">
+                            <div class="space-y-6">
+                                <div>
+                                    <span class="text-xs font-black uppercase text-medical-500 tracking-wider">Contact & Address</span>
+                                    <h2 class="text-3xl font-black text-slate-950 dark:text-white mt-1">Get In Touch Directly</h2>
+                                </div>
+
+                                <div class="space-y-4">
+                                    <div class="flex gap-4">
+                                        <div class="p-3 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300 rounded-xl h-fit"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                                        <div>
+                                            <span class="block text-xs font-bold text-slate-400 uppercase">Hospital Campus Address</span>
+                                            <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mt-1">704 Medical Plaza Parkway, Suite A, San Francisco, CA 94103</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex gap-4">
+                                        <div class="p-3 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300 rounded-xl h-fit"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                                        <div>
+                                            <span class="block text-xs font-bold text-slate-400 uppercase">Electronic Email Inbox</span>
+                                            <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mt-1">care@aurahealthcenter.org</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mock Interactive Google Maps Sandbox -->
+                            <div class="relative w-full h-64 bg-slate-100 dark:bg-slate-900 border border-slate-150 dark:border-slate-800 rounded-3xl overflow-hidden p-6 flex flex-col justify-between">
+                                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#6366f1_2px,transparent_2px)] [background-size:24px_24px]"></div>
+                                <div class="flex items-center justify-between relative z-10">
+                                    <span class="px-2.5 py-1 bg-white dark:bg-slate-950 text-[10px] font-black text-medical-500 tracking-wider uppercase rounded-lg shadow-sm border border-slate-100 dark:border-slate-800">Google Map Simulation</span>
+                                    <span class="flex items-center gap-1 text-[10px] text-healing-500 font-bold bg-healing-500/10 px-2 py-0.5 rounded-md"><span class="w-1.5 h-1.5 bg-healing-500 rounded-full animate-ping"></span> Live Hospital Beacon</span>
+                                </div>
+                                <div class="relative z-10 bg-white/95 dark:bg-slate-950/95 border border-slate-100 dark:border-slate-800 p-4 rounded-xl shadow-md max-w-xs self-start hover:scale-[1.02] transition-all">
+                                    <span class="block text-xs font-black text-slate-900 dark:text-white">AuraHealth HQ Tower</span>
+                                    <span class="text-[10px] text-slate-400 mt-0.5 block">704 Medical Plaza Parkway</span>
+                                    <a href="https://maps.google.com" target="_blank" class="text-[10px] text-medical-500 font-bold hover:underline inline-flex items-center gap-1 mt-2">Get Directions <i data-lucide="external-link" class="w-3 h-3"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ==================== HOSPITAL DASHBOARD PORTAL VIEW ==================== -->
+        <div id="dashboardView" class="hidden min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col lg:flex-row transition-all duration-300">
+            
+            <aside class="w-full lg:w-80 bg-white dark:bg-slate-900 border-r border-slate-200/50 dark:border-slate-800 flex flex-col justify-between shadow-sm p-6 shrink-0 z-20">
+                <div class="space-y-6">
+                    <!-- Dashboard Header -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-gradient-to-tr from-medical-500 to-indigo-600 text-white p-2 rounded-xl">
+                                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-sm font-black text-slate-900 dark:text-white block leading-none">AuraHealth HMS</span>
+                                <span class="text-[9px] font-bold text-slate-400 tracking-wider uppercase mt-1 block">Hospital Core Node</span>
+                            </div>
+                        </div>
+                        <button onclick="switchToPublicSite()" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-150 dark:hover:bg-slate-800 rounded-lg transition-colors" title="Exit to Public Website">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Mode/Role Selection Tab -->
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block pl-2">System Active Role</label>
+                        <select id="roleSelector" onchange="handleRoleSelectorChange(this.value)" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs font-bold bg-slate-50 dark:bg-slate-950 text-slate-700 dark:text-slate-300">
+                            <option value="admin">Admin Dashboard</option>
+                            <option value="doctor">Doctor Dashboard</option>
+                            <option value="patient">Patient Dashboard</option>
+                            <option value="reception">Reception Dashboard</option>
+                        </select>
+                    </div>
+
+                    <!-- Sidebar Navigation list (Controls view tabs inside dashboard) -->
+                    <nav class="space-y-1" id="dashSidebarMenu">
+                        <!-- Navigation tabs populated dynamically via Javascript to match active selected role context -->
+                    </nav>
+                </div>
+
+                <!-- Sidebar footer user profile block -->
+                <div class="pt-6 border-t border-slate-100 dark:border-slate-800 mt-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-medical-500 text-white flex items-center justify-center font-black text-sm shadow-md" id="userAvatarInitials">AH</div>
+                        <div>
+                            <span class="block text-xs font-black text-slate-900 dark:text-white" id="userAvatarName">Admin Principal</span>
+                            <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block" id="userAvatarRole">SYSTEM MASTER</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="flex-grow p-6 lg:p-10 overflow-y-auto bg-slate-50/50 dark:bg-slate-950/20">
+                
+                <!-- Dashboard Workspace view grids: Active container modules loaded selectively -->
+                <div id="dashWorkspace">
+                    <!-- Dynamic Dashboard Layout Views rendered here inside Javascript controllers -->
+                </div>
+
+            </main>
+
+        </div>
+
+
+        <!-- ==================== PLATFORM FOOTER SECTION ==================== -->
+        <footer id="platformFooter" class="bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900 py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Brand info -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2">
+                            <div class="bg-gradient-to-tr from-medical-500 to-indigo-600 text-white p-1.5 rounded-lg">
+                                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+                            </div>
+                            <span class="font-extrabold text-slate-800 dark:text-white tracking-wide uppercase">AuraHealth Platform</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">Providing high-grade diagnostic solutions, clinical operations systems, and compassionate therapy schedules since 2001.</p>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="space-y-3">
+                        <span class="block text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Quick Navigation</span>
+                        <ul class="space-y-1.5 text-xs text-slate-400">
+                            <li><a href="#about" class="hover:text-medical-500 transition-colors">About Us</a></li>
+                            <li><a href="#services" class="hover:text-medical-500 transition-colors">Our Services</a></li>
+                            <li><a href="#doctors" class="hover:text-medical-500 transition-colors">Doctors Roster</a></li>
+                            <li><a href="#departments" class="hover:text-medical-500 transition-colors">Departments Map</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Legals -->
+                    <div class="space-y-3">
+                        <span class="block text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Legal Frameworks</span>
+                        <ul class="space-y-1.5 text-xs text-slate-400">
+                            <li><a href="#" class="hover:text-medical-500 transition-colors">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-medical-500 transition-colors">Terms of Service</a></li>
+                            <li><a href="#" class="hover:text-medical-500 transition-colors">HIPAA Medical Compliance</a></li>
+                            <li><a href="#" class="hover:text-medical-500 transition-colors">GDPR Information Governance</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Socials -->
+                    <div class="space-y-3">
+                        <span class="block text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Hospital Network</span>
+                        <div class="flex gap-2">
+                            <a href="#" class="p-2 bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-all"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                            <a href="#" class="p-2 bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-all"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                            <a href="#" class="p-2 bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                            <a href="#" class="p-2 bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-all"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-slate-100 dark:border-slate-900 text-center text-slate-400 text-xs">
+                    <p>© 2026 AuraHealth Medical Center. All rights reserved. Registered Quaternary General Hospital Group License ID: #H-9024-SF.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <!-- ==================== JAVASCRIPT SYSTEM CONTROLLERS ==================== -->
+    <script>
+        let mockDoctors = [
+            { id: 'doc-1', name: 'Dr. Evelyn Carter', specialty: 'Cardiology', experience: '14 Years', availability: 'Mon, Wed, Fri', imageInitials: 'EC', rating: 4.9, image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300&h=300' },
+            { id: 'doc-2', name: 'Dr. Adrian Ross', specialty: 'Neurology', experience: '18 Years', availability: 'Tue, Thu, Sat', imageInitials: 'AR', rating: 5.0, image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300&h=300' },
+            { id: 'doc-3', name: 'Dr. Sarah Jenkins', specialty: 'Orthopedics', experience: '11 Years', availability: 'Mon, Tue, Thu', imageInitials: 'SJ', rating: 4.8, image: 'https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=300&h=300' },
+            { id: 'doc-4', name: 'Dr. Timothy Vance', specialty: 'Pediatrics', experience: '9 Years', availability: 'Wed, Fri', imageInitials: 'TV', rating: 4.9, image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=300&h=300' },
+            { id: 'doc-5', name: 'Dr. Helena Frost', specialty: 'Cardiology', experience: '15 Years', availability: 'Tue, Thu', imageInitials: 'HF', rating: 4.7, image: 'https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&q=80&w=300&h=300' },
+            { id: 'doc-6', name: 'Dr. Robert Chen', specialty: 'Neurology', experience: '20 Years', availability: 'Mon, Fri', imageInitials: 'RC', rating: 4.9, image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300&h=300' }
+        ];
+
+        let mockAppointments = [
+            { id: 'apt-101', patientName: 'Jane Doe', email: 'jane@doe.com', phone: '+1 555-019-2834', department: 'Cardiology', doctor: 'Dr. Evelyn Carter', date: '2026-07-10', time: '09:00 AM', status: 'Approved', message: 'Regular post-op consultation checkup.' },
+            { id: 'apt-102', patientName: 'John Smith', email: 'john@smith.com', phone: '+1 555-012-3456', department: 'Neurology', doctor: 'Dr. Adrian Ross', date: '2026-07-12', time: '11:00 AM', status: 'Pending', message: 'Experiencing recurrent severe migraines.' },
+            { id: 'apt-103', patientName: 'Alice Johnson', email: 'alice@johnson.com', phone: '+1 555-015-6789', department: 'Orthopedics', doctor: 'Dr. Sarah Jenkins', date: '2026-07-15', time: '01:00 PM', status: 'Approved', message: 'Slight pain recurrence in rehabilitated left knee.' }
+        ];
+
+        let mockPatients = [
+            { id: 'pat-201', name: 'Jane Doe', email: 'jane@doe.com', dob: '1988-11-24', status: 'Admitted', room: 'Suite 104', medicalRecordNo: 'MRN-8049-JD' },
+            { id: 'pat-202', name: 'John Smith', email: 'john@smith.com', dob: '1975-04-12', status: 'Outpatient', room: 'N/A', medicalRecordNo: 'MRN-1024-JS' },
+            { id: 'pat-203', name: 'Alice Johnson', email: 'alice@johnson.com', dob: '1995-09-02', status: 'Discharged', room: 'N/A', medicalRecordNo: 'MRN-5629-AJ' }
+        ];
+
+        let mockBilling = [
+            { id: 'inv-301', patient: 'Jane Doe', description: 'Coronary Telemetry Fee', amount: 1500.00, status: 'Paid', date: '2026-06-28' },
+            { id: 'inv-302', patient: 'John Smith', description: 'Neurology Outpatient Consult', amount: 350.00, status: 'Unpaid', date: '2026-07-01' },
+            { id: 'inv-303', patient: 'Alice Johnson', description: 'Orthopedics Knee X-Ray', amount: 280.00, status: 'Paid', date: '2026-07-04' }
+        ];
+
+        let mockPharmacy = [
+            { id: 'drug-1', name: 'Amoxicillin 500mg', category: 'Antibiotic', stock: 1200, price: 15.50, status: 'In Stock' },
+            { id: 'drug-2', name: 'Atorvastatin 20mg', category: 'Cardiovascular', stock: 850, price: 24.00, status: 'In Stock' },
+            { id: 'drug-3', name: 'Gabapentin 300mg', category: 'Neurological', stock: 400, price: 32.50, status: 'In Stock' },
+            { id: 'drug-4', name: 'Ibuprofen 400mg', category: 'Analgesic', stock: 20, price: 8.00, status: 'Low Stock' }
+        ];
+
+        let mockLaboratory = [
+            { id: 'lab-401', patient: 'Jane Doe', test: 'Lipid Blood Panel', status: 'Completed', released: '2026-07-02', outcome: 'Cholesterol values slightly elevated.' },
+            { id: 'lab-402', patient: 'John Smith', test: 'Neurological MRI Scan', status: 'Pending', released: 'Pending', outcome: 'Awaiting radiologist review.' },
+            { id: 'lab-403', patient: 'Alice Johnson', test: 'Left Knee X-Ray', status: 'Completed', released: '2026-07-04', outcome: 'Surgical recovery tracking perfectly.' }
+        ];
+
+        let mockStaff = [
+            { id: 'stf-501', name: 'Sarah Connor', role: 'Head Triage Nurse', department: 'Emergency', status: 'Active' },
+            { id: 'stf-502', name: 'James Carter', role: 'Ambulance Paramedic', department: 'Ambulance Desk', status: 'Active' },
+            { id: 'stf-503', name: 'Nancy Wheeler', role: 'Laboratory Lead Technician', department: 'Diagnostics', status: 'On Leave' }
+        ];
+
+        let mockInventory = [
+            { id: 'inv-1', item: 'Disposable Surgical Gowns', category: 'PPE', stock: 1500, status: 'Optimal' },
+            { id: 'inv-2', item: 'N95 Respirators', category: 'PPE', stock: 2200, status: 'Optimal' },
+            { id: 'inv-3', item: 'Sterile Surgical Scalpels', category: 'Surgical Tools', stock: 80, status: 'Low Stock' }
+        ];
+
+        let activeDashboardRole = 'admin';
+        let activeDashboardTab = 'analytics';
+        let currentSpecialtyFilter = 'All';
+
+        // Window Onload System Trigger
+        window.onload = function() {
+            // Hide screen preloader smoothly
+            setTimeout(() => {
+                const preloader = document.getElementById('screenPreloader');
+                preloader.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => preloader.remove(), 700);
+            }, 1000);
+
+            // Populate system components
+            renderPublicDoctors();
+            populateDoctorSelector('Cardiology'); // Default booking category set
+            lucide.createIcons();
+            
+            // Register scroll telemetry listener
+            window.addEventListener('scroll', handleWindowScroll);
+        };
+
+        // Scroll Telemetry Handlers
+        function handleWindowScroll() {
+            const btn = document.getElementById('scrollToTopBtn');
+            if (window.scrollY > 400) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+
+        // Dark Mode Logic
+        function toggleDarkMode() {
+            const doc = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (doc.classList.contains('dark')) {
+                doc.classList.remove('dark');
+                themeIcon.setAttribute('data-lucide', 'moon');
+                showToast("Switched to Light Theme", "info");
+            } else {
+                doc.classList.add('dark');
+                themeIcon.setAttribute('data-lucide', 'sun');
+                showToast("Switched to Dark Theme", "info");
+            }
+            lucide.createIcons();
+        }
+
+        // Mobile Menu Toggler
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // FAQ accordion toggle logic
+        function toggleFaqAccordion(id) {
+            const ans = document.getElementById(`faq-ans-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+
+            if (ans.classList.contains('hidden')) {
+                ans.classList.remove('hidden');
+                icon.style.transform = "rotate(45deg)";
+            } else {
+                ans.classList.add('hidden');
+                icon.style.transform = "rotate(0deg)";
+            }
+        }
+
+        function renderPublicDoctors() {
+            const grid = document.getElementById('doctorsGrid');
+            grid.innerHTML = '';
+
+            const filtered = mockDoctors.filter(d => currentSpecialtyFilter === 'All' || d.specialty === currentSpecialtyFilter);
+
+            filtered.forEach(d => {
+                const card = `
+                    <div class="glass p-6 rounded-3xl border border-slate-100 dark:border-slate-800 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                        <div>
+                            <!-- Dynamic Doctor Profile Image with Graceful Initials Fallback -->
+                            <div class="w-full h-44 rounded-2xl overflow-hidden mb-4 border border-slate-150 dark:border-slate-800 relative bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
+                                ${d.image ? `
+                                    <img src="${d.image}" alt="${d.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                                ` : ''}
+                                <div class="${d.image ? 'hidden' : ''} absolute inset-0 bg-gradient-to-tr from-medical-500/10 to-indigo-500/10 flex items-center justify-center font-extrabold text-3xl text-medical-600 dark:text-medical-400">
+                                    <span class="relative z-10">${d.imageInitials}</span>
+                                    <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#6366f1_2px,transparent_2px)] [background-size:12px_12px]"></div>
+                                </div>
+                            </div>
+
+                            <span class="text-[10px] font-black uppercase text-medical-500 tracking-wider">${d.specialty}</span>
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-base mt-1">${d.name}</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Fellowship Experience: ${d.experience}</p>
+                            
+                            <div class="flex items-center gap-1.5 mt-2">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-healing-500"></i>
+                                <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Available: ${d.availability}</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4 flex items-center justify-between gap-2">
+                            <span class="text-xs font-bold text-slate-500">Score: ${d.rating} ★</span>
+                            <a href="#appointment-booking" onclick="preSelectDoctorBooking('${d.specialty}', '${d.name}')" class="px-3.5 py-1.5 bg-medical-500 hover:bg-medical-600 text-white text-[10px] font-black rounded-lg transition-colors flex items-center gap-1 shadow-md shadow-medical-500/10">
+                                <i data-lucide="calendar" class="w-3 h-3"></i> Book Slot
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', card);
+            });
+
+            lucide.createIcons();
+        }
+
+        function filterDoctorsBySpecialty(specialty) {
+            currentSpecialtyFilter = specialty;
+            
+            // Style Active State of Buttons
+            const buttons = document.querySelectorAll('.doctor-filter-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.trim().toLowerCase() === specialty.toLowerCase() || (specialty === 'All' && btn.textContent.includes('All'))) {
+                    btn.className = "doctor-filter-btn px-4 py-2 text-xs font-semibold rounded-xl bg-medical-500 text-white shadow-md shadow-medical-500/10 whitespace-nowrap";
+                } else {
+                    btn.className = "doctor-filter-btn px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 whitespace-nowrap";
+                }
+            });
+
+            renderPublicDoctors();
+        }
+
+        // Dynamically feed specialist selects
+        function populateDoctorSelector(department) {
+            const select = document.getElementById('aptDoctor');
+            select.innerHTML = '';
+
+            const filtered = mockDoctors.filter(d => d.specialty === department);
+            filtered.forEach(d => {
+                select.innerHTML += `<option value="${d.name}">${d.name}</option>`;
+            });
+        }
+
+        // Pre-select inputs when user triggers doctor bookings from cards
+        function preSelectDoctorBooking(department, doctorName) {
+            document.getElementById('aptDepartment').value = department;
+            populateDoctorSelector(department);
+            document.getElementById('aptDoctor').value = doctorName;
+            showToast(`Selected ${doctorName} for booking`, 'info');
+        }
+
+        function handleAppointmentSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('aptName').value.trim();
+            const email = document.getElementById('aptEmail').value.trim();
+            const phone = document.getElementById('aptPhone').value.trim();
+            const department = document.getElementById('aptDepartment').value;
+            const doctor = document.getElementById('aptDoctor').value;
+            const date = document.getElementById('aptDate').value;
+            const time = document.getElementById('aptTime').value;
+            const message = document.getElementById('aptMessage').value.trim();
+
+            const newApt = {
+                id: `apt-${Math.floor(200 + Math.random() * 800)}`,
+                patientName: name,
+                email: email,
+                phone: phone,
+                department: department,
+                doctor: doctor,
+                date: date,
+                time: time,
+                status: 'Pending',
+                message: message || 'N/A'
+            };
+
+            // Feed global register
+            mockAppointments.unshift(newApt);
+
+            // Clean fields
+            document.getElementById('publicAppointmentForm').reset();
+            populateDoctorSelector('Cardiology');
+
+            showToast("Appointment Successfully Submitted! Syncing with Dashboard...", "success");
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            e.target.reset();
+            showToast("Message dispatched successfully! AuraHealth support will contact you.", "success");
+        }
+
+
+        // ==================== DASHBOARD NAVIGATION CONTROLLERS ====================
+        
+        function switchToPortal(defaultRole = 'admin') {
+            document.getElementById('publicSiteView').classList.add('hidden');
+            document.getElementById('platformFooter').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+
+            document.getElementById('roleSelector').value = defaultRole;
+            handleRoleSelectorChange(defaultRole);
+            
+            // Scroll to workstation top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchToPublicSite() {
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('publicSiteView').classList.remove('hidden');
+            document.getElementById('platformFooter').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleRoleSelectorChange(role) {
+            activeDashboardRole = role;
+            
+            // Set User avatar profiles corresponding to selected mock profile
+            const initials = document.getElementById('userAvatarInitials');
+            const name = document.getElementById('userAvatarName');
+            const subTitle = document.getElementById('userAvatarRole');
+
+            if (role === 'admin') {
+                initials.textContent = 'AH';
+                name.textContent = 'Admin Master';
+                subTitle.textContent = 'SYSTEM MASTER';
+                activeDashboardTab = 'analytics';
+            } else if (role === 'doctor') {
+                initials.textContent = 'AR';
+                name.textContent = 'Dr. Adrian Ross';
+                subTitle.textContent = 'CLINICAL LEAD';
+                activeDashboardTab = 'doctor-consults';
+            } else if (role === 'patient') {
+                initials.textContent = 'JD';
+                name.textContent = 'Jane Doe';
+                subTitle.textContent = 'PATIENT ID: 8049';
+                activeDashboardTab = 'patient-portal';
+            } else if (role === 'reception') {
+                initials.textContent = 'RW';
+                name.textContent = 'Reception Desk';
+                subTitle.textContent = 'TRIAGE COORDINATOR';
+                activeDashboardTab = 'reception-triage';
+            }
+
+            renderSidebarNavigation();
+            loadWorkspaceModule();
+        }
+
+        function renderSidebarNavigation() {
+            const sidebarNav = document.getElementById('dashSidebarMenu');
+            sidebarNav.innerHTML = '';
+
+            let tabs = [];
+
+            if (activeDashboardRole === 'admin') {
+                tabs = [
+                    { id: 'analytics', label: 'Analytics Dashboard', icon: 'pie-chart' },
+                    { id: 'manage-doctors', label: 'Doctor Management', icon: 'user-cog' },
+                    { id: 'manage-patients', label: 'Patient Management', icon: 'users' },
+                    { id: 'manage-appointments', label: 'Appointments Desk', icon: 'calendar-check' },
+                    { id: 'manage-billing', label: 'Billing & Payments', icon: 'credit-card' },
+                    { id: 'manage-pharmacy', label: 'Pharmacy Stocks', icon: 'pill' },
+                    { id: 'manage-labs', label: 'Laboratory Reports', icon: 'test-tube-2' },
+                    { id: 'manage-records', label: 'Medical Records', icon: 'file-text' },
+                    { id: 'manage-staff', label: 'Staff Management', icon: 'badge-id' },
+                    { id: 'manage-inventory', label: 'Inventory tracker', icon: 'package' }
+                ];
+            } else if (activeDashboardRole === 'doctor') {
+                tabs = [
+                    { id: 'doctor-consults', label: 'My consultations', icon: 'activity' },
+                    { id: 'doctor-records', label: 'Medical History', icon: 'file-text' },
+                    { id: 'doctor-prescriptions', label: 'Prescribe medicine', icon: 'pill' }
+                ];
+            } else if (activeDashboardRole === 'patient') {
+                tabs = [
+                    { id: 'patient-portal', label: 'My Patient Hub', icon: 'user' },
+                    { id: 'patient-records', label: 'My Clinical Records', icon: 'heart-pulse' },
+                    { id: 'patient-labs', label: 'My Lab Reports', icon: 'test-tube-2' },
+                    { id: 'patient-billing', label: 'My Billing', icon: 'credit-card' }
+                ];
+            } else if (activeDashboardRole === 'reception') {
+                tabs = [
+                    { id: 'reception-triage', label: 'Triage Registers', icon: 'ambulance' },
+                    { id: 'reception-scheduler', label: 'Schedule walk-ins', icon: 'calendar' }
+                ];
+            }
+
+            tabs.forEach(t => {
+                const isActive = (activeDashboardTab === t.id);
+                const activeClass = isActive 
+                    ? "bg-medical-500 text-white shadow-md shadow-medical-500/10" 
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white";
+
+                const button = `
+                    <button onclick="changeDashboardTab('${t.id}')" class="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold rounded-xl transition-all ${activeClass}">
+                        <i data-lucide="${t.icon}" class="w-4 h-4 shrink-0"></i>
+                        <span>${t.label}</span>
+                    </button>
+                `;
+                sidebarNav.insertAdjacentHTML('beforeend', button);
+            });
+
+            lucide.createIcons();
+        }
+
+        function changeDashboardTab(tabId) {
+            activeDashboardTab = tabId;
+            renderSidebarNavigation();
+            loadWorkspaceModule();
+        }
+
+        function loadWorkspaceModule() {
+            const container = document.getElementById('dashWorkspace');
+            container.innerHTML = '';
+
+            // Handle Header Info Block
+            let headerHTML = `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200/50 dark:border-slate-800 mb-6 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-black text-slate-950 dark:text-white capitalize">${activeDashboardTab.replace('-', ' ')} Hub</h2>
+                        <p class="text-xs text-slate-400 mt-1">Real-time mock interface for active AuraHealth administrative system.</p>
+                    </div>
+                    <span class="bg-healing-500/10 text-healing-500 font-bold px-3 py-1.5 rounded-xl text-[10px] tracking-wider uppercase inline-flex items-center gap-1 w-fit"><span class="w-1.5 h-1.5 bg-healing-500 rounded-full animate-ping"></span> Live simulation active</span>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', headerHTML);
+
+            // Conditional view rendering matching active tab ID state
+            if (activeDashboardTab === 'analytics') {
+                renderAnalyticsWorkspace(container);
+            } else if (activeDashboardTab === 'manage-doctors') {
+                renderDoctorManagementWorkspace(container);
+            } else if (activeDashboardTab === 'manage-patients') {
+                renderPatientManagementWorkspace(container);
+            } else if (activeDashboardTab === 'manage-appointments') {
+                renderAppointmentsDeskWorkspace(container);
+            } else if (activeDashboardTab === 'manage-billing') {
+                renderBillingWorkspace(container);
+            } else if (activeDashboardTab === 'manage-pharmacy') {
+                renderPharmacyWorkspace(container);
+            } else if (activeDashboardTab === 'manage-labs') {
+                renderLabsWorkspace(container);
+            } else if (activeDashboardTab === 'manage-records') {
+                renderRecordsWorkspace(container);
+            } else if (activeDashboardTab === 'manage-staff') {
+                renderStaffWorkspace(container);
+            } else if (activeDashboardTab === 'manage-inventory') {
+                renderInventoryWorkspace(container);
+            } else if (activeDashboardTab === 'doctor-consults') {
+                renderDoctorConsultsWorkspace(container);
+            } else if (activeDashboardTab === 'doctor-records') {
+                renderDoctorRecordsWorkspace(container);
+            } else if (activeDashboardTab === 'doctor-prescriptions') {
+                renderDoctorPrescriptionsWorkspace(container);
+            } else if (activeDashboardTab === 'patient-portal') {
+                renderPatientPortalWorkspace(container);
+            } else if (activeDashboardTab === 'patient-records') {
+                renderPatientRecordsWorkspace(container);
+            } else if (activeDashboardTab === 'patient-labs') {
+                renderPatientLabsWorkspace(container);
+            } else if (activeDashboardTab === 'patient-billing') {
+                renderPatientBillingWorkspace(container);
+            } else if (activeDashboardTab === 'reception-triage') {
+                renderReceptionTriageWorkspace(container);
+            } else if (activeDashboardTab === 'reception-scheduler') {
+                renderReceptionSchedulerWorkspace(container);
+            }
+
+            lucide.createIcons();
+        }
+
+
+        // ==================== ADMINISTRATIVE WORKSPACE MODULES ====================
+
+        function renderAnalyticsWorkspace(container) {
+            const cardsCount = `
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Clinical Bed Occupancy</span>
+                        <h4 class="text-3xl font-black text-slate-950 dark:text-white mt-1">412 / 500</h4>
+                        <div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full mt-3 overflow-hidden">
+                            <div class="bg-medical-500 h-full rounded-full" style="width: 82.4%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Total Active Patients</span>
+                        <h4 class="text-3xl font-black text-slate-950 dark:text-white mt-1">${mockPatients.length}</h4>
+                        <p class="text-[10px] text-healing-500 font-bold mt-1 inline-flex items-center gap-0.5"><i data-lucide="arrow-up" class="w-3 h-3"></i> +3 registrations today</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Pending Lab Reports</span>
+                        <h4 class="text-3xl font-black text-slate-950 dark:text-white mt-1">${mockLaboratory.filter(l => l.status === 'Pending').length}</h4>
+                        <p class="text-[10px] text-slate-400 font-bold mt-1">Diagnostics pavilion pipeline</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Daily Generated Revenue</span>
+                        <h4 class="text-3xl font-black text-slate-950 dark:text-white mt-1">$2,130.00</h4>
+                        <p class="text-[10px] text-healing-500 font-bold mt-1 inline-flex items-center gap-0.5"><i data-lucide="arrow-up" class="w-3 h-3"></i> Co-pays matched directly</p>
+                    </div>
+                </div>
+
+                <!-- Live Chart implementation -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-sm">Monthly Patient Admissions Trends</h4>
+                            <span class="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded font-bold">2026 Telemetry</span>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="admissionsTrendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-sm">Clinical Revenue Distribution ($)</h4>
+                            <span class="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded font-bold">Category Match</span>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="revenueShareChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', cardsCount);
+
+            // Instantly render Chart.js items on next microtask
+            setTimeout(() => {
+                const admissionsCtx = document.getElementById('admissionsTrendChart').getContext('2d');
+                new Chart(admissionsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                        datasets: [{
+                            label: 'Admitted patients count',
+                            data: [320, 390, 310, 420, 450, 412, 430],
+                            borderColor: '#6366f1',
+                            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: false } }
+                    }
+                });
+
+                const revenueCtx = document.getElementById('revenueShareChart').getContext('2d');
+                new Chart(revenueCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Surgery', 'Outpatient Consults', 'Laboratory panels', 'Pharmacy Store'],
+                        datasets: [{
+                            data: [5000, 2200, 1800, 3500],
+                            backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#3b82f6'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }, 10);
+        }
+
+        function renderDoctorManagementWorkspace(container) {
+            let formAndTable = `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Doctor Addition Column Form -->
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm h-fit space-y-4">
+                        <div class="space-y-1">
+                            <h4 class="font-extrabold text-slate-950 dark:text-white text-base">Add Specialist Physician</h4>
+                            <p class="text-[10px] text-slate-400">Publish clinician details to public booking roster.</p>
+                        </div>
+                        <form id="dashDocForm" onsubmit="handleDashDoctorAddSubmit(event)" class="space-y-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Physician Full Name</label>
+                                <input type="text" id="addDocName" required placeholder="Dr. Sophia Loren" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Specialty Dept</label>
+                                    <select id="addDocSpecialty" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950 bg-white dark:text-white">
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Neurology">Neurology</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Experience</label>
+                                    <input type="text" id="addDocExp" required placeholder="12 Years" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Availability (Days)</label>
+                                <input type="text" id="addDocAvail" required placeholder="Mon, Tue, Thu" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-medical-500 hover:bg-medical-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-medical-500/10 flex items-center justify-center gap-1.5">
+                                <i data-lucide="plus" class="w-4 h-4"></i> Add Specialist
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Doctors Data Table List -->
+                    <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                        <th class="pb-3">Doctor Details</th>
+                                        <th class="pb-3">Department</th>
+                                        <th class="pb-3">Experience</th>
+                                        <th class="pb-3">Roster availability</th>
+                                        <th class="pb-3 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 dark:divide-slate-800" id="dashDoctorsTableBody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', formAndTable);
+            renderDashboardDoctorsTable();
+        }
+
+        function renderDashboardDoctorsTable() {
+            const body = document.getElementById('dashDoctorsTableBody');
+            body.innerHTML = '';
+
+            mockDoctors.forEach(d => {
+                const tr = `
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="py-3 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-medical-500/10 text-medical-500 flex items-center justify-center font-bold text-xs shrink-0">${d.imageInitials}</div>
+                            <span class="font-extrabold text-slate-800 dark:text-white">${d.name}</span>
+                        </td>
+                        <td class="py-3 text-slate-500">${d.specialty}</td>
+                        <td class="py-3 text-slate-500 font-medium">${d.experience}</td>
+                        <td class="py-3 text-slate-500 font-medium">${d.availability}</td>
+                        <td class="py-3 text-right">
+                            <button onclick="removeDoctorFromDashboard('${d.id}')" class="p-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg text-slate-400 hover:text-rose-500 transition-colors" title="Purge Specialist">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                body.insertAdjacentHTML('beforeend', tr);
+            });
+            lucide.createIcons();
+        }
+
+        function handleDashDoctorAddSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('addDocName').value.trim();
+            const specialty = document.getElementById('addDocSpecialty').value;
+            const exp = document.getElementById('addDocExp').value.trim();
+            const avail = document.getElementById('addDocAvail').value.trim();
+
+            const initials = name.split(' ').filter(p => p.toLowerCase() !== 'dr.').map(p => p[0]).join('').substring(0,2).toUpperCase();
+
+            const newDoc = {
+                id: `doc-${Date.now()}`,
+                name: name,
+                specialty: specialty,
+                experience: exp,
+                availability: avail,
+                imageInitials: initials || 'MD',
+                rating: 5.0
+            };
+
+            mockDoctors.push(newDoc);
+            
+            // Clean inputs
+            e.target.reset();
+
+            renderDashboardDoctorsTable();
+            renderPublicDoctors();
+            showToast(`${name} added to roster!`, 'success');
+        }
+
+        function removeDoctorFromDashboard(id) {
+            const item = mockDoctors.find(d => d.id === id);
+            if (!item) return;
+
+            mockDoctors = mockDoctors.filter(d => d.id !== id);
+            renderDashboardDoctorsTable();
+            renderPublicDoctors();
+            showToast(`Purged ${item.name} from hospital roster.`, 'info');
+        }
+
+        function renderPatientManagementWorkspace(container) {
+            let component = `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm h-fit space-y-4">
+                        <div class="space-y-1">
+                            <h4 class="font-extrabold text-slate-950 dark:text-white text-base">Register Inpatient Case</h4>
+                            <p class="text-[10px] text-slate-400">Log inpatient hospital room allocations.</p>
+                        </div>
+                        <form id="dashPatientForm" onsubmit="handleDashPatientSubmit(event)" class="space-y-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Patient Display Name</label>
+                                <input type="text" id="regPatName" required placeholder="Alex River" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Email Address</label>
+                                <input type="email" id="regPatEmail" required placeholder="alex@river.com" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Triage Status</label>
+                                    <select id="regPatStatus" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950 bg-white dark:text-white">
+                                        <option value="Admitted">Admitted</option>
+                                        <option value="Outpatient">Outpatient</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Room Allocation</label>
+                                    <input type="text" id="regPatRoom" placeholder="Ward 204" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-medical-500 hover:bg-medical-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-medical-500/10 flex items-center justify-center gap-1.5">
+                                <i data-lucide="plus" class="w-4 h-4"></i> Log Inpatient
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                        <th class="pb-3">Medical Record No (MRN)</th>
+                                        <th class="pb-3">Patient Display Name</th>
+                                        <th class="pb-3">Case Status</th>
+                                        <th class="pb-3">Room Room No</th>
+                                        <th class="pb-3 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 dark:divide-slate-800" id="dashPatientsTableBody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', component);
+            renderDashboardPatientsTable();
+        }
+
+        function renderDashboardPatientsTable() {
+            const body = document.getElementById('dashPatientsTableBody');
+            body.innerHTML = '';
+
+            mockPatients.forEach(p => {
+                let badgeClass = p.status === 'Admitted' ? "bg-red-500/10 text-red-500" : "bg-healing-500/10 text-healing-500";
+                const tr = `
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="py-3 font-mono font-bold text-medical-500">${p.medicalRecordNo}</td>
+                        <td class="py-3 font-extrabold text-slate-800 dark:text-white">${p.name}</td>
+                        <td class="py-3">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeClass}">${p.status}</span>
+                        </td>
+                        <td class="py-3 text-slate-500 font-medium">${p.room}</td>
+                        <td class="py-3 text-right">
+                            <button onclick="removePatientFromDashboard('${p.id}')" class="p-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-slate-400 hover:text-rose-500 rounded-lg transition-colors" title="Purge Record">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                body.insertAdjacentHTML('beforeend', tr);
+            });
+            lucide.createIcons();
+        }
+
+        function handleDashPatientSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('regPatName').value.trim();
+            const email = document.getElementById('regPatEmail').value.trim();
+            const status = document.getElementById('regPatStatus').value;
+            const room = document.getElementById('regPatRoom').value.trim() || 'N/A';
+
+            const initials = name.split(' ').map(p => p[0]).join('').substring(0, 2).toUpperCase();
+
+            const newPat = {
+                id: `pat-${Date.now()}`,
+                name: name,
+                email: email,
+                status: status,
+                room: status === 'Admitted' ? room : 'N/A',
+                medicalRecordNo: `MRN-${Math.floor(1000 + Math.random() * 9000)}-${initials}`
+            };
+
+            mockPatients.push(newPat);
+            e.target.reset();
+
+            renderDashboardPatientsTable();
+            showToast(`${name} registered successfully.`, 'success');
+        }
+
+        function removePatientFromDashboard(id) {
+            const item = mockPatients.find(p => p.id === id);
+            if (!item) return;
+
+            mockPatients = mockPatients.filter(p => p.id !== id);
+            renderDashboardPatientsTable();
+            showToast(`Purged Patient record for ${item.name}`, 'info');
+        }
+
+        function renderAppointmentsDeskWorkspace(container) {
+            let listHTML = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">Patient</th>
+                                    <th class="pb-3">Specialist / Doctor</th>
+                                    <th class="pb-3">Specialty</th>
+                                    <th class="pb-3">Date / Time Slot</th>
+                                    <th class="pb-3">Approval status</th>
+                                    <th class="pb-3 text-right font-sans">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800" id="dashAppointmentsTableBody">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', listHTML);
+            renderDashboardAppointmentsTable();
+        }
+
+        function renderDashboardAppointmentsTable() {
+            const body = document.getElementById('dashAppointmentsTableBody');
+            body.innerHTML = '';
+
+            mockAppointments.forEach(a => {
+                let badgeClass = "bg-amber-500/10 text-amber-500";
+                if (a.status === 'Approved') badgeClass = "bg-healing-500/10 text-healing-500";
+                if (a.status === 'Cancelled') badgeClass = "bg-red-500/10 text-red-500";
+
+                const tr = `
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="py-4">
+                            <span class="block font-extrabold text-slate-850 dark:text-white leading-tight">${a.patientName}</span>
+                            <span class="text-[10px] text-slate-400 mt-0.5 block">${a.phone}</span>
+                        </td>
+                        <td class="py-4 font-semibold text-slate-800 dark:text-slate-300">${a.doctor}</td>
+                        <td class="py-4 text-slate-500 font-medium">${a.department}</td>
+                        <td class="py-4">
+                            <span class="block text-slate-800 dark:text-slate-300 font-semibold">${a.date}</span>
+                            <span class="text-[10px] text-slate-400 mt-0.5 block">${a.time}</span>
+                        </td>
+                        <td class="py-4">
+                            <span class="px-2 py-1 rounded text-[10px] font-black ${badgeClass}">${a.status}</span>
+                        </td>
+                        <td class="py-4 text-right space-x-1.5 whitespace-nowrap">
+                            ${a.status === 'Pending' ? `
+                                <button onclick="updateAppointmentStatus('${a.id}', 'Approved')" class="px-2 py-1 bg-healing-500 hover:bg-healing-600 text-white rounded text-[10px] font-bold transition-colors">Approve</button>
+                                <button onclick="updateAppointmentStatus('${a.id}', 'Cancelled')" class="px-2 py-1 bg-rose-500 hover:bg-rose-600 text-white rounded text-[10px] font-bold transition-colors">Deny</button>
+                            ` : ''}
+                            <button onclick="removeAppointmentFromDashboard('${a.id}')" class="p-1 text-slate-400 hover:text-rose-500 rounded-lg inline-block align-middle transition-all" title="Purge slot">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                body.insertAdjacentHTML('beforeend', tr);
+            });
+            lucide.createIcons();
+        }
+
+        function updateAppointmentStatus(id, newStatus) {
+            const item = mockAppointments.find(a => a.id === id);
+            if (!item) return;
+
+            item.status = newStatus;
+            renderDashboardAppointmentsTable();
+            showToast(`Appointment status changed to ${newStatus}`, 'success');
+        }
+
+        function removeAppointmentFromDashboard(id) {
+            const item = mockAppointments.find(a => a.id === id);
+            if (!item) return;
+
+            mockAppointments = mockAppointments.filter(a => a.id !== id);
+            renderDashboardAppointmentsTable();
+            showToast(`Removed slot registration successfully.`, 'info');
+        }
+
+        function renderBillingWorkspace(container) {
+            let component = `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm h-fit space-y-4">
+                        <div class="space-y-1">
+                            <h4 class="font-extrabold text-slate-950 dark:text-white text-base">Generate Bill / Invoice</h4>
+                            <p class="text-[10px] text-slate-400">Dispatch digital co-pay match directly to portals.</p>
+                        </div>
+                        <form id="dashBillingForm" onsubmit="handleDashBillingSubmit(event)" class="space-y-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Patient Profile Matching</label>
+                                <select id="billPat" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950 bg-white dark:text-white">
+                                    ${mockPatients.map(p => `<option value="${p.name}">${p.name}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Services render narrative</label>
+                                <input type="text" id="billDesc" required placeholder="Cardiology Outpatient consult" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Est amount due ($)</label>
+                                    <input type="number" id="billAmount" step="0.01" required placeholder="350.00" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase font-sans">Posting Date</label>
+                                    <input type="date" id="billDate" required class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950 bg-white dark:text-white">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-medical-500 hover:bg-medical-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-medical-500/10 flex items-center justify-center gap-1.5">
+                                <i data-lucide="file-text" class="w-4 h-4"></i> Generate Invoice
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                        <th class="pb-3">Invoice Code</th>
+                                        <th class="pb-3">Patient Profile</th>
+                                        <th class="pb-3">Service Details</th>
+                                        <th class="pb-3">Posting Date</th>
+                                        <th class="pb-3">Amount Charged</th>
+                                        <th class="pb-3">Status</th>
+                                        <th class="pb-3 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 dark:divide-slate-800" id="dashBillingTableBody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', component);
+            renderDashboardBillingTable();
+        }
+
+        function renderDashboardBillingTable() {
+            const body = document.getElementById('dashBillingTableBody');
+            body.innerHTML = '';
+
+            mockBilling.forEach(b => {
+                let badgeClass = b.status === 'Paid' ? "bg-healing-500/10 text-healing-500" : "bg-amber-500/10 text-amber-500";
+                const tr = `
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="py-3 font-mono font-bold text-medical-500">${b.id}</td>
+                        <td class="py-3 font-extrabold text-slate-800 dark:text-white">${b.patient}</td>
+                        <td class="py-3 text-slate-500 font-medium">${b.description}</td>
+                        <td class="py-3 text-slate-500 font-medium">${b.date}</td>
+                        <td class="py-3 font-bold text-slate-900 dark:text-white">$${b.amount.toFixed(2)}</td>
+                        <td class="py-3">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeClass}">${b.status}</span>
+                        </td>
+                        <td class="py-3 text-right space-x-1">
+                            ${b.status === 'Unpaid' ? `
+                                <button onclick="toggleBillStatusPaid('${b.id}')" class="px-2 py-0.5 bg-healing-500 text-white rounded text-[9px] font-bold">Paid</button>
+                            ` : ''}
+                            <button onclick="removeInvoiceFromDashboard('${b.id}')" class="p-1 text-slate-400 hover:text-rose-500 rounded transition-colors inline-block align-middle">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                body.insertAdjacentHTML('beforeend', tr);
+            });
+            lucide.createIcons();
+        }
+
+        function toggleBillStatusPaid(id) {
+            const item = mockBilling.find(b => b.id === id);
+            if (!item) return;
+
+            item.status = 'Paid';
+            renderDashboardBillingTable();
+            showToast(`Invoice ${id} marked as Paid.`, 'success');
+        }
+
+        function removeInvoiceFromDashboard(id) {
+            mockBilling = mockBilling.filter(b => b.id !== id);
+            renderDashboardBillingTable();
+            showToast(`Deleted invoice log ${id}`, 'info');
+        }
+
+        function handleDashBillingSubmit(e) {
+            e.preventDefault();
+
+            const patient = document.getElementById('billPat').value;
+            const desc = document.getElementById('billDesc').value.trim();
+            const amount = parseFloat(document.getElementById('billAmount').value);
+            const date = document.getElementById('billDate').value;
+
+            const newInv = {
+                id: `inv-${Math.floor(400 + Math.random() * 500)}`,
+                patient: patient,
+                description: desc,
+                amount: amount,
+                status: 'Unpaid',
+                date: date
+            };
+
+            mockBilling.unshift(newInv);
+            e.target.reset();
+
+            renderDashboardBillingTable();
+            showToast(`Generated Invoice successfully! Sent directly to ${patient}'s portal.`, 'success');
+        }
+
+        function renderPharmacyWorkspace(container) {
+            let listHTML = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">Drug Name</th>
+                                    <th class="pb-3">Classification</th>
+                                    <th class="pb-3">Active Stock count</th>
+                                    <th class="pb-3">Unit retail Price</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3 text-right">Inventory Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800" id="dashPharmacyTableBody">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', listHTML);
+            renderDashboardPharmacyTable();
+        }
+
+        function renderDashboardPharmacyTable() {
+            const body = document.getElementById('dashPharmacyTableBody');
+            body.innerHTML = '';
+
+            mockPharmacy.forEach(p => {
+                let statusClass = "bg-healing-500/10 text-healing-500";
+                if (p.status === 'Low Stock') statusClass = "bg-amber-500/10 text-amber-500";
+
+                const tr = `
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="py-3 font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i data-lucide="pill" class="w-4 h-4 text-medical-500"></i>
+                            <span>${p.name}</span>
+                        </td>
+                        <td class="py-3 text-slate-500 font-medium">${p.category}</td>
+                        <td class="py-3 font-mono font-bold text-slate-900 dark:text-white">${p.stock} units</td>
+                        <td class="py-3 font-bold text-slate-800 dark:text-slate-300">$${p.price.toFixed(2)}</td>
+                        <td class="py-3">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${statusClass}">${p.status}</span>
+                        </td>
+                        <td class="py-3 text-right space-x-2">
+                            <button onclick="dispatchPharmacyReplenish('${p.id}')" class="px-2 py-1 bg-medical-500 hover:bg-medical-600 text-white rounded text-[9px] font-bold transition-all">Restock</button>
+                        </td>
+                    </tr>
+                `;
+                body.insertAdjacentHTML('beforeend', tr);
+            });
+            lucide.createIcons();
+        }
+
+        function dispatchPharmacyReplenish(id) {
+            const item = mockPharmacy.find(p => p.id === id);
+            if (!item) return;
+
+            item.stock += 500;
+            item.status = 'In Stock';
+            renderDashboardPharmacyTable();
+            showToast(`Replenished stock of ${item.name} (+500 units)`, 'success');
+        }
+
+        function renderLabsWorkspace(container) {
+            let listHTML = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">Lab Panel Case ID</th>
+                                    <th class="pb-3">Patient Profile</th>
+                                    <th class="pb-3">Test Classification</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3">Released date</th>
+                                    <th class="pb-3">Outcome details</th>
+                                    <th class="pb-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800" id="dashLabsTableBody">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', listHTML);
+            renderDashboardLabsTable();
+        }
+
+        function renderDashboardLabsTable() {
+            const body = document.getElementById('dashLabsTableBody');
+            body.innerHTML = '';
+
+            mockLaboratory.forEach(l => {
+                let badgeClass = l.status === 'Completed' ? "bg-healing-500/10 text-healing-500" : "bg-amber-500/10 text-amber-500";
+                const tr = `
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="py-4 font-mono font-bold text-medical-500">${l.id}</td>
+                        <td class="py-4 font-extrabold text-slate-800 dark:text-white">${l.patient}</td>
+                        <td class="py-4 text-slate-500 font-semibold">${l.test}</td>
+                        <td class="py-4">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeClass}">${l.status}</span>
+                        </td>
+                        <td class="py-4 text-slate-500 font-medium">${l.released}</td>
+                        <td class="py-4 text-slate-500 max-w-xs truncate" title="${l.outcome}">${l.outcome}</td>
+                        <td class="py-4 text-right">
+                            ${l.status === 'Pending' ? `
+                                <button onclick="completeLabTestOutcome('${l.id}')" class="px-2 py-1 bg-medical-500 hover:bg-medical-600 text-white rounded text-[10px] font-bold transition-all">Upload outcome</button>
+                            ` : ''}
+                        </td>
+                    </tr>
+                `;
+                body.insertAdjacentHTML('beforeend', tr);
+            });
+            lucide.createIcons();
+        }
+
+        function completeLabTestOutcome(id) {
+            const item = mockLaboratory.find(l => l.id === id);
+            if (!item) return;
+
+            item.status = 'Completed';
+            item.released = '2026-07-06';
+            item.outcome = 'Negative, clear diagnostic scans verified.';
+            renderDashboardLabsTable();
+            showToast(`Lab report outcome uploaded for ${item.patient}`, 'success');
+        }
+
+        function renderRecordsWorkspace(container) {
+            let layout = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-extrabold text-slate-900 dark:text-white text-sm">Consolidated electronic health registers</h4>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">MRN Registry</th>
+                                    <th class="pb-3">Patient Profile Name</th>
+                                    <th class="pb-3">DOB</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                ${mockPatients.map(p => `
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all">
+                                        <td class="py-3 font-mono font-bold text-medical-500">${p.medicalRecordNo}</td>
+                                        <td class="py-3 font-extrabold text-slate-850 dark:text-white">${p.name}</td>
+                                        <td class="py-3 text-slate-500 font-semibold">${p.dob}</td>
+                                        <td class="py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.status === 'Admitted' ? 'bg-red-500/10 text-red-500' : 'bg-healing-500/10 text-healing-500'}">${p.status}</span></td>
+                                        <td class="py-3 text-right">
+                                            <button onclick="switchToPortal('doctor')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded text-[10px] font-bold transition-all">Review history</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', layout);
+        }
+
+        function renderStaffWorkspace(container) {
+            let layout = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">Staff ID</th>
+                                    <th class="pb-3">Staff Name</th>
+                                    <th class="pb-3">Roster Role</th>
+                                    <th class="pb-3">Department</th>
+                                    <th class="pb-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                ${mockStaff.map(s => `
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all">
+                                        <td class="py-3 font-mono font-bold text-medical-500">${s.id}</td>
+                                        <td class="py-3 font-extrabold text-slate-850 dark:text-white">${s.name}</td>
+                                        <td class="py-3 text-slate-500 font-semibold">${s.role}</td>
+                                        <td class="py-3 text-slate-500 font-semibold">${s.department}</td>
+                                        <td class="py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-healing-500/10 text-healing-500">${s.status}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', layout);
+        }
+
+        function renderInventoryWorkspace(container) {
+            let layout = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">Item ID</th>
+                                    <th class="pb-3">Item Description</th>
+                                    <th class="pb-3">Category</th>
+                                    <th class="pb-3">Stock remaining</th>
+                                    <th class="pb-3">Safety Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                ${mockInventory.map(i => `
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all">
+                                        <td class="py-3 font-mono font-bold text-medical-500">${i.id}</td>
+                                        <td class="py-3 font-extrabold text-slate-850 dark:text-white">${i.item}</td>
+                                        <td class="py-3 text-slate-500 font-semibold">${i.category}</td>
+                                        <td class="py-3 font-mono font-bold text-slate-900 dark:text-white">${i.stock} units</td>
+                                        <td class="py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${i.status === 'Optimal' ? 'bg-healing-500/10 text-healing-500' : 'bg-amber-500/10 text-amber-500'}">${i.status}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', layout);
+        }
+
+
+        // ==================== DOCTOR ROLE WORKSPACE MODULES ====================
+
+        function renderDoctorConsultsWorkspace(container) {
+            let layout = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <h4 class="font-extrabold text-slate-900 dark:text-white text-sm mb-4">My Patient consultations list</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">Appointment ID</th>
+                                    <th class="pb-3">Patient display Name</th>
+                                    <th class="pb-3">Preferred Date / Hour</th>
+                                    <th class="pb-3">Clinical Message objectives</th>
+                                    <th class="pb-3 text-right">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                ${mockAppointments.filter(a => a.doctor.includes('Adrian') || a.doctor.includes('Evelyn')).map(a => `
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all">
+                                        <td class="py-3 font-mono font-bold text-medical-500">${a.id}</td>
+                                        <td class="py-3 font-extrabold text-slate-850 dark:text-white">${a.patientName}</td>
+                                        <td class="py-3 text-slate-500 font-semibold">${a.date} (${a.time})</td>
+                                        <td class="py-3 text-slate-500 font-semibold max-w-xs truncate">${a.message}</td>
+                                        <td class="py-3 text-right"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${a.status === 'Approved' ? 'bg-healing-500/10 text-healing-500' : 'bg-amber-500/10 text-amber-500'}">${a.status}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', layout);
+        }
+
+        function renderDoctorRecordsWorkspace(container) {
+            renderRecordsWorkspace(container);
+        }
+
+        function renderDoctorPrescriptionsWorkspace(container) {
+            let form = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm space-y-4">
+                        <div class="space-y-1">
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-sm">Issue digital prescription</h4>
+                            <p class="text-[10px] text-slate-400">Directly post medications to live pharmacy logs.</p>
+                        </div>
+                        <form id="docPrescribeForm" onsubmit="handleDocPrescribeSubmit(event)" class="space-y-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Patient Name</label>
+                                <select id="prescPat" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950 bg-white dark:text-white">
+                                    ${mockPatients.map(p => `<option value="${p.name}">${p.name}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Select Medication</label>
+                                    <select id="prescDrug" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950 bg-white dark:text-white">
+                                        ${mockPharmacy.map(p => `<option value="${p.name}">${p.name}</option>`).join('')}
+                                    </select>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Dosage Schedule</label>
+                                    <input type="text" id="prescDose" required placeholder="1 Tablet (Daily)" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-medical-500 hover:bg-medical-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-medical-500/10 flex items-center justify-center gap-1.5">
+                                <i data-lucide="pill" class="w-4 h-4"></i> Issue Prescription
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm relative overflow-hidden flex flex-col justify-between">
+                        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#6366f1_2px,transparent_2px)] [background-size:20px_20px]"></div>
+                        <div class="relative z-10 space-y-4">
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-sm">Security & Compliance warning</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Prescribing critical care antibiotics or scheduled pain management therapeutics requires digital biometric matching matching HIPAA data standards. Ensure the patient MRN details match perfectly beforehand.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', form);
+        }
+
+        function handleDocPrescribeSubmit(e) {
+            e.preventDefault();
+            const pat = document.getElementById('prescPat').value;
+            const drug = document.getElementById('prescDrug').value;
+            const dose = document.getElementById('prescDose').value;
+
+            // Reduce Pharmacy stock mock value to simulate active dispatch
+            const stockItem = mockPharmacy.find(p => p.name === drug);
+            if (stockItem && stockItem.stock > 1) {
+                stockItem.stock -= 1;
+            }
+
+            e.target.reset();
+            showToast(`Prescribed ${drug} to ${pat} with dosage ${dose}`, 'success');
+        }
+
+
+        // ==================== PATIENT ROLE WORKSPACE MODULES ====================
+
+        function renderPatientPortalWorkspace(container) {
+            let dashboard = `
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    
+                    <div class="bg-gradient-to-tr from-medical-500 to-indigo-600 text-white p-6 rounded-3xl shadow-lg border border-white/10 space-y-4">
+                        <div class="p-3 bg-white/10 rounded-2xl w-fit"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+                        <div>
+                            <span class="block text-xs font-bold text-indigo-200">Patient Electronic Record (MRN)</span>
+                            <span class="text-xl font-black block">MRN-8049-JD</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Assigned Suite / Room No</span>
+                            <h4 class="text-2xl font-black text-slate-950 dark:text-white mt-1">Suite 104</h4>
+                        </div>
+                        <span class="text-[10px] text-healing-500 font-bold bg-healing-500/10 px-2 py-0.5 rounded w-fit">Continuous Telemetry Active</span>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Active Billing balance</span>
+                            <h4 class="text-2xl font-black text-slate-950 dark:text-white mt-1">$0.00</h4>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-bold">Matched with international policies</span>
+                    </div>
+
+                </div>
+
+                <!-- Recent Clinical prescriptions overview -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <h4 class="font-extrabold text-slate-900 dark:text-white text-sm mb-4">My Clinical Prescriptions Roster</h4>
+                    <div class="space-y-3">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-150 dark:border-slate-800 rounded-2xl flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 rounded-xl"><i data-lucide="pill" class="w-5 h-5"></i></div>
+                                <div>
+                                    <span class="block text-xs font-bold text-slate-900 dark:text-white">Amoxicillin 500mg</span>
+                                    <span class="text-[10px] text-slate-400">Post-Op Recovery schedule</span>
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-healing-500 bg-healing-500/10 px-2 py-1 rounded font-bold">Active</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', dashboard);
+        }
+
+        function renderPatientRecordsWorkspace(container) {
+            let layout = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm space-y-4">
+                    <h4 class="font-extrabold text-slate-900 dark:text-white text-sm">Patient Electronic Clinical History Logs</h4>
+                    <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-150 dark:border-slate-800 rounded-2xl">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Consultation entry - 2026-06-28</span>
+                        <h5 class="text-xs font-black text-slate-900 dark:text-white mt-1">General Cardiac angiogram recovery check</h5>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">No coronary blocks discovered during angioplasty diagnostics. Triage check recommended checking blood cholesterol parameters in weeks. Recovery status tracking perfectly.</p>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', layout);
+        }
+
+        function renderPatientLabsWorkspace(container) {
+            let listHTML = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">Panel Case ID</th>
+                                    <th class="pb-3">Diagnostic test category</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3">Released Date</th>
+                                    <th class="pb-3">Clinical Outcome</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                ${mockLaboratory.filter(l => l.patient.includes('Jane')).map(l => `
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all">
+                                        <td class="py-3 font-mono font-bold text-medical-500">${l.id}</td>
+                                        <td class="py-3 font-extrabold text-slate-850 dark:text-white">${l.test}</td>
+                                        <td class="py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-healing-500/10 text-healing-500">${l.status}</span></td>
+                                        <td class="py-3 text-slate-500 font-semibold">${l.released}</td>
+                                        <td class="py-3 text-slate-500 font-semibold">${l.outcome}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', listHTML);
+        }
+
+        function renderPatientBillingWorkspace(container) {
+            let listHTML = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 uppercase font-black tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <th class="pb-3">Invoice Code</th>
+                                    <th class="pb-3">Billing description</th>
+                                    <th class="pb-3">Amount Due</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                ${mockBilling.filter(b => b.patient.includes('Jane')).map(b => `
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all">
+                                        <td class="py-3 font-mono font-bold text-medical-500">${b.id}</td>
+                                        <td class="py-3 font-extrabold text-slate-850 dark:text-white">${b.description}</td>
+                                        <td class="py-3 font-bold text-slate-900 dark:text-white">$${b.amount.toFixed(2)}</td>
+                                        <td class="py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${b.status === 'Paid' ? 'bg-healing-500/10 text-healing-500' : 'bg-amber-500/10 text-amber-500'}">${b.status}</span></td>
+                                        <td class="py-3 text-right">
+                                            ${b.status === 'Unpaid' ? `
+                                                <button onclick="payPatientInvoiceOffline('${b.id}')" class="px-3 py-1 bg-medical-500 hover:bg-medical-600 text-white rounded text-[10px] font-bold transition-all shadow-md">Pay co-pay</button>
+                                            ` : '<span class="text-xs text-slate-400 font-bold">Invoice Cleared</span>'}
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', listHTML);
+        }
+
+        function payPatientInvoiceOffline(id) {
+            const item = mockBilling.find(b => b.id === id);
+            if (!item) return;
+
+            item.status = 'Paid';
+            renderPatientBillingWorkspace(document.getElementById('dashWorkspace'));
+            showToast(`Invoice matches directly. Paid co-pay successfully!`, 'success');
+        }
+
+
+        // ==================== RECEPTION ROLE WORKSPACE MODULES ====================
+
+        function renderReceptionTriageWorkspace(container) {
+            renderPatientManagementWorkspace(container);
+        }
+
+        function renderReceptionSchedulerWorkspace(container) {
+            let layout = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm space-y-4">
+                        <div class="space-y-1">
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-sm">Schedule Quick Walk-in Slot</h4>
+                            <p class="text-[10px] text-slate-400">Lock consultation sessions for walk-in triages.</p>
+                        </div>
+                        <form id="recQuickForm" onsubmit="handleRecQuickSubmit(event)" class="space-y-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Patient Display Name</label>
+                                <input type="text" id="recName" required placeholder="Alex River" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Specialist Physician</label>
+                                    <select id="recDoc" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950 bg-white dark:text-white">
+                                        ${mockDoctors.map(d => `<option value="${d.name}">${d.name} (${d.specialty})</option>`).join('')}
+                                    </select>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase font-sans">Date</label>
+                                    <input type="date" id="recDate" required class="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-medical-500 text-xs dark:bg-slate-950 bg-white dark:text-white">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-medical-500 hover:bg-medical-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-medical-500/10 flex items-center justify-center gap-1.5">
+                                <i data-lucide="calendar" class="w-4 h-4"></i> Schedule Session
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 p-6 rounded-3xl shadow-sm relative overflow-hidden flex flex-col justify-between">
+                        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#6366f1_2px,transparent_2px)] [background-size:20px_20px]"></div>
+                        <div class="relative z-10 space-y-4">
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-sm">Triage speed optimization</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Scheduling quick walk-ins automatically creates electronic billing match entries to allow rapid discharge once general medical consultation finishes. Keep details synchronized.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', layout);
+        }
+
+        function handleRecQuickSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('recName').value.trim();
+            const doc = document.getElementById('recDoc').value;
+            const date = document.getElementById('recDate').value;
+
+            const newApt = {
+                id: `apt-${Math.floor(600 + Math.random() * 400)}`,
+                patientName: name,
+                email: 'walkin@aurahealth.com',
+                phone: 'Walk-In Customer',
+                department: 'Diagnostics Check',
+                doctor: doc.split(' (')[0],
+                date: date,
+                time: 'Immediate',
+                status: 'Approved',
+                message: 'Walk-in consult'
+            };
+
+            mockAppointments.unshift(newApt);
+            e.target.reset();
+            showToast(`Scheduled immediate consultation for ${name}`, 'success');
+        }
+
+
+        // ==================== FEEDBACK TOAST SYSTEM ====================
+        
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            
+            let bgClass = "bg-healing-600 text-white shadow-healing-500/15";
+            let icon = "check-circle-2";
+
+            if (type === 'error') {
+                bgClass = "bg-rose-600 text-white shadow-rose-500/15";
+                icon = "alert-circle";
+            } else if (type === 'info') {
+                bgClass = "bg-slate-900 dark:bg-slate-800 text-white shadow-slate-950/20";
+                icon = "info";
+            }
+
+            const toastId = `toast-${Date.now()}`;
+            const toastHTML = `
+                <div id="${toastId}" class="pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl border border-white/10 ${bgClass} transform translate-y-2 opacity-0 transition-all duration-300">
+                    <i data-lucide="${icon}" class="w-4 h-4 shrink-0"></i>
+                    <p class="text-xs sm:text-sm font-semibold leading-snug">${message}</p>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', toastHTML);
+            lucide.createIcons();
+
+            // Trigger Transition Animations
+            const el = document.getElementById(toastId);
+            setTimeout(() => {
+                el.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            // Trigger automatic teardown
+            setTimeout(() => {
+                el.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => el.remove(), 300);
+            }, 4000);
+        }
+
+    </script>
+</body>
+</html>
